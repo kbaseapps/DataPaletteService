@@ -1,3 +1,6 @@
+
+#include <workspace.spec>
+
 /*
 
 */
@@ -8,8 +11,7 @@ module DataPaletteService {
 
     typedef structure {
         ws_ref ref;
-        string meta;
-        string src_nar;
+        Workspace.object_info info;
     } DataInfo;
 
     typedef structure {
@@ -26,7 +28,6 @@ module DataPaletteService {
 
     funcdef list_data(ListDataParams params)
         returns (DataList data_list) authentication optional;
-
 
 
     /* todo: allow passing in a reference chain */

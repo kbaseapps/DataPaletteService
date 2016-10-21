@@ -121,9 +121,29 @@ DataList is a reference to a hash where the following keys are defined:
 	data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
-	meta has a value which is a string
+	info has a value which is a Workspace.object_info
 	src_nar has a value which is a string
 ws_ref is a string
+object_info is a reference to a list containing 11 items:
+	0: (objid) a Workspace.obj_id
+	1: (name) a Workspace.obj_name
+	2: (type) a Workspace.type_string
+	3: (save_date) a Workspace.timestamp
+	4: (version) an int
+	5: (saved_by) a Workspace.username
+	6: (wsid) a Workspace.ws_id
+	7: (workspace) a Workspace.ws_name
+	8: (chsum) a string
+	9: (size) an int
+	10: (meta) a Workspace.usermeta
+obj_id is an int
+obj_name is a string
+type_string is a string
+timestamp is a string
+username is a string
+ws_id is an int
+ws_name is a string
+usermeta is a reference to a hash where the key is a string and the value is a string
 
 </pre>
 
@@ -140,9 +160,29 @@ DataList is a reference to a hash where the following keys are defined:
 	data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
-	meta has a value which is a string
+	info has a value which is a Workspace.object_info
 	src_nar has a value which is a string
 ws_ref is a string
+object_info is a reference to a list containing 11 items:
+	0: (objid) a Workspace.obj_id
+	1: (name) a Workspace.obj_name
+	2: (type) a Workspace.type_string
+	3: (save_date) a Workspace.timestamp
+	4: (version) an int
+	5: (saved_by) a Workspace.username
+	6: (wsid) a Workspace.ws_id
+	7: (workspace) a Workspace.ws_name
+	8: (chsum) a string
+	9: (size) an int
+	10: (meta) a Workspace.usermeta
+obj_id is an int
+obj_name is a string
+type_string is a string
+timestamp is a string
+username is a string
+ws_id is an int
+ws_name is a string
+usermeta is a reference to a hash where the key is a string and the value is a string
 
 
 =end text
@@ -518,7 +558,7 @@ a string
 <pre>
 a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
-meta has a value which is a string
+info has a value which is a Workspace.object_info
 src_nar has a value which is a string
 
 </pre>
@@ -529,7 +569,7 @@ src_nar has a value which is a string
 
 a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
-meta has a value which is a string
+info has a value which is a Workspace.object_info
 src_nar has a value which is a string
 
 
