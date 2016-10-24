@@ -51,4 +51,13 @@ module DataPaletteService {
 
     funcdef remove_from_palette(RemoveFromPaletteParams params)
         returns () authentication required;
+
+
+    typedef structure {
+        ws_name_or_id from_workspace;
+        ws_name_or_id to_workspace;
+    } CopyPaletteParams;
+
+    funcdef copy_palette(CopyPaletteParams params)
+        returns () authentication required;
 };
