@@ -48,22 +48,34 @@ class DataPaletteInterface():
         if 'new_refs' not in params:
             raise ValueError('missing required field "new_refs" in parameters to add_to_palette')
         if not isinstance(params['new_refs'], list):
-            raise ValueError('"new_refs" field must be a list')
+            raise ValueError('"new_refs" field must be a list in parameters to add_to_palette')
         for k in range(0, len(params['new_refs'])):
             ref = params['new_refs'][k]
             if 'ref' not in ref:
                 raise ValueError('"new_refs" list at position '+str(k)+' does not contain required "ref" field')
 
         dp = DataPalette(params['workspace'], token=token, ws_url=self.ws_url)
-        dp.add(refs=params['new_refs'])
+        return dp.add(refs=params['new_refs'])
 
 
-    def remove_from_palette(self, params, ctx):
+    def remove_from_palette(self, ctx, params):
         '''
         '''
         token = self._extract_token(ctx)
-        raise ValueError('Removal not yet implemented')
-        return
+
+        if 'workspace' not in params:
+            raise ValueError('missing required field "workspace" in parameters to remove_from_palette')
+        if 'refs' not in params:
+            raise ValueError('missing required field "refs" in parameters to remove_from_palette')
+        if not isinstance(params['refs'], list):
+            raise ValueError('"refs" field must be a list in parameters to remove_from_palette')
+        for k in range(0, len(params['refs'])):
+            ref = params['refs'][k]
+            if 'ref' not in ref:
+                raise ValueError('"refs" list at position '+str(k)+' does not contain required "ref" field')
+
+        dp = DataPalette(params['workspace'], token=token, ws_url=self.ws_url)
+        return dp.remove(refs=params['refs'])
 
 
 

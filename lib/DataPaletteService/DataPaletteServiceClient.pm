@@ -122,7 +122,6 @@ DataList is a reference to a hash where the following keys are defined:
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
-	src_nar has a value which is a string
 ws_ref is a string
 object_info is a reference to a list containing 11 items:
 	0: (objid) a Workspace.obj_id
@@ -161,7 +160,6 @@ DataList is a reference to a hash where the following keys are defined:
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
-	src_nar has a value which is a string
 ws_ref is a string
 object_info is a reference to a list containing 11 items:
 	0: (objid) a Workspace.obj_id
@@ -245,7 +243,7 @@ usermeta is a reference to a hash where the key is a string and the value is a s
 
 =head2 add_to_palette
 
-  $obj->add_to_palette($params)
+  $result = $obj->add_to_palette($params)
 
 =over 4
 
@@ -255,6 +253,7 @@ usermeta is a reference to a hash where the key is a string and the value is a s
 
 <pre>
 $params is a DataPaletteService.AddToPaletteParams
+$result is a DataPaletteService.AddToPaletteResult
 AddToPaletteParams is a reference to a hash where the following keys are defined:
 	workspace has a value which is a DataPaletteService.ws_name_or_id
 	new_refs has a value which is a reference to a list where each element is a DataPaletteService.ObjectReference
@@ -262,6 +261,7 @@ ws_name_or_id is a string
 ObjectReference is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 ws_ref is a string
+AddToPaletteResult is a reference to a hash where the following keys are defined
 
 </pre>
 
@@ -270,6 +270,7 @@ ws_ref is a string
 =begin text
 
 $params is a DataPaletteService.AddToPaletteParams
+$result is a DataPaletteService.AddToPaletteResult
 AddToPaletteParams is a reference to a hash where the following keys are defined:
 	workspace has a value which is a DataPaletteService.ws_name_or_id
 	new_refs has a value which is a reference to a list where each element is a DataPaletteService.ObjectReference
@@ -277,6 +278,7 @@ ws_name_or_id is a string
 ObjectReference is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 ws_ref is a string
+AddToPaletteResult is a reference to a hash where the following keys are defined
 
 
 =end text
@@ -325,7 +327,7 @@ ws_ref is a string
 					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
 					      );
 	} else {
-	    return;
+	    return wantarray ? @{$result->result} : $result->result->[0];
 	}
     } else {
         Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method add_to_palette",
@@ -339,7 +341,7 @@ ws_ref is a string
 
 =head2 remove_from_palette
 
-  $obj->remove_from_palette($params)
+  $result = $obj->remove_from_palette($params)
 
 =over 4
 
@@ -349,11 +351,13 @@ ws_ref is a string
 
 <pre>
 $params is a DataPaletteService.RemoveFromPaletteParams
+$result is a DataPaletteService.RemoveFromPaletteResult
 RemoveFromPaletteParams is a reference to a hash where the following keys are defined:
 	workspace has a value which is a DataPaletteService.ws_name_or_id
 	refs has a value which is a reference to a list where each element is a DataPaletteService.ws_ref
 ws_name_or_id is a string
 ws_ref is a string
+RemoveFromPaletteResult is a reference to a hash where the following keys are defined
 
 </pre>
 
@@ -362,18 +366,23 @@ ws_ref is a string
 =begin text
 
 $params is a DataPaletteService.RemoveFromPaletteParams
+$result is a DataPaletteService.RemoveFromPaletteResult
 RemoveFromPaletteParams is a reference to a hash where the following keys are defined:
 	workspace has a value which is a DataPaletteService.ws_name_or_id
 	refs has a value which is a reference to a list where each element is a DataPaletteService.ws_ref
 ws_name_or_id is a string
 ws_ref is a string
+RemoveFromPaletteResult is a reference to a hash where the following keys are defined
 
 
 =end text
 
 =item Description
 
-
+Note: right now you must provide the exact, absolute reference of the
+item to delete (e.g. 2524/3/1) and matched exactly to be removed.  Relative
+refs will not be matched.  Currently, this method will throw an error
+if a provided reference was not found in the palette.
 
 =back
 
@@ -415,12 +424,104 @@ ws_ref is a string
 					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
 					      );
 	} else {
-	    return;
+	    return wantarray ? @{$result->result} : $result->result->[0];
 	}
     } else {
         Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method remove_from_palette",
 					    status_line => $self->{client}->status_line,
 					    method_name => 'remove_from_palette',
+				       );
+    }
+}
+ 
+
+
+=head2 copy_palette
+
+  $result = $obj->copy_palette($params)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$params is a DataPaletteService.CopyPaletteParams
+$result is a DataPaletteService.CopyPaletteResult
+CopyPaletteParams is a reference to a hash where the following keys are defined:
+	from_workspace has a value which is a DataPaletteService.ws_name_or_id
+	to_workspace has a value which is a DataPaletteService.ws_name_or_id
+ws_name_or_id is a string
+CopyPaletteResult is a reference to a hash where the following keys are defined
+
+</pre>
+
+=end html
+
+=begin text
+
+$params is a DataPaletteService.CopyPaletteParams
+$result is a DataPaletteService.CopyPaletteResult
+CopyPaletteParams is a reference to a hash where the following keys are defined:
+	from_workspace has a value which is a DataPaletteService.ws_name_or_id
+	to_workspace has a value which is a DataPaletteService.ws_name_or_id
+ws_name_or_id is a string
+CopyPaletteResult is a reference to a hash where the following keys are defined
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+ sub copy_palette
+{
+    my($self, @args) = @_;
+
+# Authentication: required
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function copy_palette (received $n, expecting 1)");
+    }
+    {
+	my($params) = @args;
+
+	my @_bad_arguments;
+        (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"params\" (value was \"$params\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to copy_palette:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'copy_palette');
+	}
+    }
+
+    my $url = $self->{url};
+    my $result = $self->{client}->call($url, $self->{headers}, {
+	    method => "DataPaletteService.copy_palette",
+	    params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'copy_palette',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method copy_palette",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'copy_palette',
 				       );
     }
 }
@@ -468,16 +569,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'remove_from_palette',
+                method_name => 'copy_palette',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method remove_from_palette",
+            error => "Error invoking method copy_palette",
             status_line => $self->{client}->status_line,
-            method_name => 'remove_from_palette',
+            method_name => 'copy_palette',
         );
     }
 }
@@ -559,7 +660,6 @@ a string
 a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
 info has a value which is a Workspace.object_info
-src_nar has a value which is a string
 
 </pre>
 
@@ -570,7 +670,6 @@ src_nar has a value which is a string
 a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
 info has a value which is a Workspace.object_info
-src_nar has a value which is a string
 
 
 =end text
@@ -737,6 +836,32 @@ new_refs has a value which is a reference to a list where each element is a Data
 
 
 
+=head2 AddToPaletteResult
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined
+
+=end text
+
+=back
+
+
+
 =head2 RemoveFromPaletteParams
 
 =over 4
@@ -762,6 +887,90 @@ a reference to a hash where the following keys are defined:
 workspace has a value which is a DataPaletteService.ws_name_or_id
 refs has a value which is a reference to a list where each element is a DataPaletteService.ws_ref
 
+
+=end text
+
+=back
+
+
+
+=head2 RemoveFromPaletteResult
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined
+
+=end text
+
+=back
+
+
+
+=head2 CopyPaletteParams
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+from_workspace has a value which is a DataPaletteService.ws_name_or_id
+to_workspace has a value which is a DataPaletteService.ws_name_or_id
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+from_workspace has a value which is a DataPaletteService.ws_name_or_id
+to_workspace has a value which is a DataPaletteService.ws_name_or_id
+
+
+=end text
+
+=back
+
+
+
+=head2 CopyPaletteResult
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined
 
 =end text
 

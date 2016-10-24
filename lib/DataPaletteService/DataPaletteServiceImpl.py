@@ -24,7 +24,7 @@ class DataPaletteService:
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "git@github.com:kbaseapps/DataPaletteService"
-    GIT_COMMIT_HASH = "e9902b98048d7754384543244c35e359188bec6f"
+    GIT_COMMIT_HASH = "40396b31e1fb2a851e2ce66cc9b6c015c8e2f780"
     
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -89,8 +89,7 @@ class DataPaletteService:
            kbasetest:my_workspace.), parameter "chsum" of String, parameter
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
-           the user.) -> mapping from String to String, parameter "src_nar"
-           of String
+           the user.) -> mapping from String to String
         """
         # ctx is the context object
         # return variables are: data_list
@@ -112,24 +111,64 @@ class DataPaletteService:
            "new_refs" of list of type "ObjectReference" (todo: allow passing
            in a reference chain) -> structure: parameter "ref" of type
            "ws_ref" (@id ws)
+        :returns: instance of type "AddToPaletteResult" -> structure:
         """
         # ctx is the context object
+        # return variables are: result
         #BEGIN add_to_palette
-        self.data_palette_interface.add_to_palette(ctx, params)
+        result = self.data_palette_interface.add_to_palette(ctx, params)
         #END add_to_palette
-        pass
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, dict):
+            raise ValueError('Method add_to_palette return value ' +
+                             'result is not type dict as required.')
+        # return the results
+        return [result]
 
     def remove_from_palette(self, ctx, params):
         """
+        Note: right now you must provide the exact, absolute reference of the
+        item to delete (e.g. 2524/3/1) and matched exactly to be removed.  Relative
+        refs will not be matched.  Currently, this method will throw an error
+        if a provided reference was not found in the palette.
         :param params: instance of type "RemoveFromPaletteParams" ->
            structure: parameter "workspace" of type "ws_name_or_id",
            parameter "refs" of list of type "ws_ref" (@id ws)
+        :returns: instance of type "RemoveFromPaletteResult" -> structure:
         """
         # ctx is the context object
+        # return variables are: result
         #BEGIN remove_from_palette
-        self.data_palette_interface.remove_from_palette(ctx, params)
+        result = self.data_palette_interface.remove_from_palette(ctx, params)
         #END remove_from_palette
-        pass
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, dict):
+            raise ValueError('Method remove_from_palette return value ' +
+                             'result is not type dict as required.')
+        # return the results
+        return [result]
+
+    def copy_palette(self, ctx, params):
+        """
+        :param params: instance of type "CopyPaletteParams" -> structure:
+           parameter "from_workspace" of type "ws_name_or_id", parameter
+           "to_workspace" of type "ws_name_or_id"
+        :returns: instance of type "CopyPaletteResult" -> structure:
+        """
+        # ctx is the context object
+        # return variables are: result
+        #BEGIN copy_palette
+        raise ValueError('not yet implemented')
+        #END copy_palette
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, dict):
+            raise ValueError('Method copy_palette return value ' +
+                             'result is not type dict as required.')
+        # return the results
+        return [result]
 
     def status(self, ctx):
         #BEGIN_STATUS

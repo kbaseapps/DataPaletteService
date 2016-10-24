@@ -183,29 +183,54 @@ public class DataPaletteServiceClient {
      * <pre>
      * </pre>
      * @param   params   instance of type {@link us.kbase.datapaletteservice.AddToPaletteParams AddToPaletteParams}
+     * @return   parameter "result" of type {@link us.kbase.datapaletteservice.AddToPaletteResult AddToPaletteResult}
      * @throws IOException if an IO exception occurs
      * @throws JsonClientException if a JSON RPC exception occurs
      */
-    public void addToPalette(AddToPaletteParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+    public AddToPaletteResult addToPalette(AddToPaletteParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
         List<Object> args = new ArrayList<Object>();
         args.add(params);
-        TypeReference<Object> retType = new TypeReference<Object>() {};
-        caller.jsonrpcCall("DataPaletteService.add_to_palette", args, retType, false, true, jsonRpcContext, this.serviceVersion);
+        TypeReference<List<AddToPaletteResult>> retType = new TypeReference<List<AddToPaletteResult>>() {};
+        List<AddToPaletteResult> res = caller.jsonrpcCall("DataPaletteService.add_to_palette", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        return res.get(0);
     }
 
     /**
      * <p>Original spec-file function name: remove_from_palette</p>
      * <pre>
+     * Note: right now you must provide the exact, absolute reference of the
+     * item to delete (e.g. 2524/3/1) and matched exactly to be removed.  Relative
+     * refs will not be matched.  Currently, this method will throw an error
+     * if a provided reference was not found in the palette.
      * </pre>
      * @param   params   instance of type {@link us.kbase.datapaletteservice.RemoveFromPaletteParams RemoveFromPaletteParams}
+     * @return   parameter "result" of type {@link us.kbase.datapaletteservice.RemoveFromPaletteResult RemoveFromPaletteResult}
      * @throws IOException if an IO exception occurs
      * @throws JsonClientException if a JSON RPC exception occurs
      */
-    public void removeFromPalette(RemoveFromPaletteParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+    public RemoveFromPaletteResult removeFromPalette(RemoveFromPaletteParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
         List<Object> args = new ArrayList<Object>();
         args.add(params);
-        TypeReference<Object> retType = new TypeReference<Object>() {};
-        caller.jsonrpcCall("DataPaletteService.remove_from_palette", args, retType, false, true, jsonRpcContext, this.serviceVersion);
+        TypeReference<List<RemoveFromPaletteResult>> retType = new TypeReference<List<RemoveFromPaletteResult>>() {};
+        List<RemoveFromPaletteResult> res = caller.jsonrpcCall("DataPaletteService.remove_from_palette", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        return res.get(0);
+    }
+
+    /**
+     * <p>Original spec-file function name: copy_palette</p>
+     * <pre>
+     * </pre>
+     * @param   params   instance of type {@link us.kbase.datapaletteservice.CopyPaletteParams CopyPaletteParams}
+     * @return   parameter "result" of type {@link us.kbase.datapaletteservice.CopyPaletteResult CopyPaletteResult}
+     * @throws IOException if an IO exception occurs
+     * @throws JsonClientException if a JSON RPC exception occurs
+     */
+    public CopyPaletteResult copyPalette(CopyPaletteParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+        List<Object> args = new ArrayList<Object>();
+        args.add(params);
+        TypeReference<List<CopyPaletteResult>> retType = new TypeReference<List<CopyPaletteResult>>() {};
+        List<CopyPaletteResult> res = caller.jsonrpcCall("DataPaletteService.copy_palette", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        return res.get(0);
     }
 
     public Map<String, Object> status(RpcContext... jsonRpcContext) throws IOException, JsonClientException {

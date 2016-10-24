@@ -83,8 +83,7 @@ class DataPaletteService(object):
            kbasetest:my_workspace.), parameter "chsum" of String, parameter
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
-           the user.) -> mapping from String to String, parameter "src_nar"
-           of String
+           the user.) -> mapping from String to String
         """
         return self._client.call_method(
             'DataPaletteService.list_data',
@@ -97,6 +96,7 @@ class DataPaletteService(object):
            "new_refs" of list of type "ObjectReference" (todo: allow passing
            in a reference chain) -> structure: parameter "ref" of type
            "ws_ref" (@id ws)
+        :returns: instance of type "AddToPaletteResult" -> structure:
         """
         return self._client.call_method(
             'DataPaletteService.add_to_palette',
@@ -104,12 +104,28 @@ class DataPaletteService(object):
 
     def remove_from_palette(self, params, context=None):
         """
+        Note: right now you must provide the exact, absolute reference of the
+        item to delete (e.g. 2524/3/1) and matched exactly to be removed.  Relative
+        refs will not be matched.  Currently, this method will throw an error
+        if a provided reference was not found in the palette.
         :param params: instance of type "RemoveFromPaletteParams" ->
            structure: parameter "workspace" of type "ws_name_or_id",
            parameter "refs" of list of type "ws_ref" (@id ws)
+        :returns: instance of type "RemoveFromPaletteResult" -> structure:
         """
         return self._client.call_method(
             'DataPaletteService.remove_from_palette',
+            [params], self._service_ver, context)
+
+    def copy_palette(self, params, context=None):
+        """
+        :param params: instance of type "CopyPaletteParams" -> structure:
+           parameter "from_workspace" of type "ws_name_or_id", parameter
+           "to_workspace" of type "ws_name_or_id"
+        :returns: instance of type "CopyPaletteResult" -> structure:
+        """
+        return self._client.call_method(
+            'DataPaletteService.copy_palette',
             [params], self._service_ver, context)
 
     def status(self, context=None):

@@ -341,6 +341,10 @@ class Application(object):
                              name='DataPaletteService.remove_from_palette',
                              types=[dict])
         self.method_authentication['DataPaletteService.remove_from_palette'] = 'required'
+        self.rpc_service.add(impl_DataPaletteService.copy_palette,
+                             name='DataPaletteService.copy_palette',
+                             types=[dict])
+        self.method_authentication['DataPaletteService.copy_palette'] = 'required'
         self.rpc_service.add(impl_DataPaletteService.status,
                              name='DataPaletteService.status',
                              types=[dict])

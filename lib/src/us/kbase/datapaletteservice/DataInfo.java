@@ -21,8 +21,7 @@ import us.kbase.common.service.Tuple11;
 @Generated("com.googlecode.jsonschema2pojo")
 @JsonPropertyOrder({
     "ref",
-    "info",
-    "src_nar"
+    "info"
 })
 public class DataInfo {
 
@@ -30,8 +29,6 @@ public class DataInfo {
     private java.lang.String ref;
     @JsonProperty("info")
     private Tuple11 <Long, String, String, String, Long, String, Long, String, String, Long, Map<String, String>> info;
-    @JsonProperty("src_nar")
-    private java.lang.String srcNar;
     private Map<java.lang.String, Object> additionalProperties = new HashMap<java.lang.String, Object>();
 
     @JsonProperty("ref")
@@ -64,21 +61,6 @@ public class DataInfo {
         return this;
     }
 
-    @JsonProperty("src_nar")
-    public java.lang.String getSrcNar() {
-        return srcNar;
-    }
-
-    @JsonProperty("src_nar")
-    public void setSrcNar(java.lang.String srcNar) {
-        this.srcNar = srcNar;
-    }
-
-    public DataInfo withSrcNar(java.lang.String srcNar) {
-        this.srcNar = srcNar;
-        return this;
-    }
-
     @JsonAnyGetter
     public Map<java.lang.String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -91,7 +73,7 @@ public class DataInfo {
 
     @Override
     public java.lang.String toString() {
-        return ((((((((("DataInfo"+" [ref=")+ ref)+", info=")+ info)+", srcNar=")+ srcNar)+", additionalProperties=")+ additionalProperties)+"]");
+        return ((((((("DataInfo"+" [ref=")+ ref)+", info=")+ info)+", additionalProperties=")+ additionalProperties)+"]");
     }
 
 }

@@ -127,6 +127,35 @@ class SimpleTest(unittest.TestCase):
         self.assertEqual(d['data'][1]['ref'], objsV2[1]['abs_ref'])
         self.assertEqual(d['data'][2]['ref'], objsV3[2]['abs_ref'])
 
+        # try to add a reference to a prohibited object, should throw an error
+        obj_info = self.ws().save_objects({
+                'workspace':ws_name2,
+                'objects': [{
+                    'type': 'KBaseReport.Report',
+                    'name': 'report',
+                    'data': {'text_message':'hello', 'objects_created':[]}
+                }]
+            })[0]
+        with self.assertRaises(ValueError) as error:
+            dps.add_to_palette(self.ctx(),{
+                            'workspace':ws_name1,
+                            'new_refs':[{'ref': ws_name2 + '/report'}]
+                        })
+        print('=='+str(error.exception)+'==')
+        self.assertTrue('cannot be added to a data palette' in str(error.exception))
+
+        
+        # try to remove from the data palette
+        dps.remove_from_palette(self.ctx(),{
+                'workspace':ws_name1,
+                'refs':[{
+                    'ref': objsV3[0]['abs_ref']
+                }]
+            })
+        d = dps.list_data(self.ctx(),{'workspaces':[ws_name1]})[0]
+        self.assertEqual(len(d['data']),2)
+        self.assertEqual(d['data'][0]['ref'], objsV2[1]['abs_ref'])
+        self.assertEqual(d['data'][1]['ref'], objsV3[2]['abs_ref'])
 
 
 
