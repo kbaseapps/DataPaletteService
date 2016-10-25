@@ -1,8 +1,4 @@
 
-
-
-from pprint import pprint
-
 from DataPalette import DataPalette
 
 class DataPaletteInterface():
@@ -42,7 +38,7 @@ class DataPaletteInterface():
         '''
         '''
         token = self._extract_token(ctx)
- 
+
         if 'workspace' not in params:
             raise ValueError('missing required field "workspaces" in parameters to add_to_palette')
         if 'new_refs' not in params:
@@ -52,7 +48,7 @@ class DataPaletteInterface():
         for k in range(0, len(params['new_refs'])):
             ref = params['new_refs'][k]
             if 'ref' not in ref:
-                raise ValueError('"new_refs" list at position '+str(k)+' does not contain required "ref" field')
+                raise ValueError('"new_refs" list at position ' + str(k) + ' does not contain required "ref" field')
 
         dp = DataPalette(params['workspace'], token=token, ws_url=self.ws_url)
         return dp.add(refs=params['new_refs'])
@@ -72,7 +68,7 @@ class DataPaletteInterface():
         for k in range(0, len(params['refs'])):
             ref = params['refs'][k]
             if 'ref' not in ref:
-                raise ValueError('"refs" list at position '+str(k)+' does not contain required "ref" field')
+                raise ValueError('"refs" list at position ' + str(k) + ' does not contain required "ref" field')
 
         dp = DataPalette(params['workspace'], token=token, ws_url=self.ws_url)
         return dp.remove(refs=params['refs'])
@@ -87,7 +83,7 @@ class DataPaletteInterface():
             raise ValueError('missing required field "to_workspace" in parameters to copy_palette')
         if params['from_workspace'] is params['to_workspace']:
             raise ValueError('"from_workspace" is identical to "to_workspace" in parameters to copy_palette')
-        
+
         existing_palette = DataPalette(params['from_workspace'], token=token, ws_url=self.ws_url)
         new_palette = DataPalette(params['to_workspace'], token=token, ws_url=self.ws_url)
 
@@ -114,7 +110,7 @@ class DataPaletteInterface():
         for d in data:
             if d['ref'] in unique_refs:
                 continue
-            unique_refs[d['ref']]=None
+            unique_refs[d['ref']] = None
             unique_data.append(d)
         return unique_data
 
@@ -126,9 +122,3 @@ class DataPaletteInterface():
         if token is None:
             print('DataPaletteInterface warning: token was not set in context object')
         return token
-
-
-
-
-
-
