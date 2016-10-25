@@ -141,7 +141,6 @@ class SimpleTest(unittest.TestCase):
                             'workspace':ws_name1,
                             'new_refs':[{'ref': ws_name2 + '/report'}]
                         })
-        print('=='+str(error.exception)+'==')
         self.assertTrue('cannot be added to a data palette' in str(error.exception))
 
         
@@ -156,6 +155,33 @@ class SimpleTest(unittest.TestCase):
         self.assertEqual(len(d['data']),2)
         self.assertEqual(d['data'][0]['ref'], objsV2[1]['abs_ref'])
         self.assertEqual(d['data'][1]['ref'], objsV3[2]['abs_ref'])
+
+
+        # try to copy the data palette
+        ws_name3 = self.test_util.createWorkspace()
+        dps.copy_palette(self.ctx(),{
+                'from_workspace':ws_name1,
+                'to_workspace':ws_name3
+            })
+
+        d = dps.list_data(self.ctx(),{'workspaces':[ws_name3]})[0]
+        self.assertEqual(len(d['data']),2)
+        self.assertEqual(d['data'][0]['ref'], objsV2[1]['abs_ref'])
+        self.assertEqual(d['data'][1]['ref'], objsV3[2]['abs_ref'])
+
+        dps.add_to_palette(self.ctx(),{
+                'workspace':ws_name3,
+                'new_refs':[{
+                    'ref': objsV3[0]['relative_ref']
+                }]
+            })
+        d = dps.list_data(self.ctx(),{'workspaces':[ws_name3]})[0]
+        self.assertEqual(len(d['data']),3)
+        self.assertEqual(d['data'][0]['ref'], objsV2[1]['abs_ref'])
+        self.assertEqual(d['data'][1]['ref'], objsV3[2]['abs_ref'])
+        self.assertEqual(d['data'][2]['ref'], objsV3[0]['abs_ref'])
+
+
 
 
 

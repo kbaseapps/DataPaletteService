@@ -160,7 +160,7 @@ class DataPaletteService:
         # ctx is the context object
         # return variables are: result
         #BEGIN copy_palette
-        raise ValueError('not yet implemented')
+        result = self.data_palette_interface.copy_palette(ctx, params)
         #END copy_palette
 
         # At some point might do deeper type checking...

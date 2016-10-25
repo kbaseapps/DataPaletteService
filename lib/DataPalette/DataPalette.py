@@ -208,7 +208,7 @@ class DataPalette():
     def _create_data_palette(self):
         # 1) save the data_palette object
         palette = { 'data':[] }
-        obj_info = self.ws.save_objects({
+        new_palette_info = self.ws.save_objects({
                 'id':self.ws_info.id,
                 'objects': [{
                     'type':'DataPalette.DataPalette',
@@ -220,18 +220,26 @@ class DataPalette():
             })[0]
 
         # 2) update ws metadata
-        self.ws.alter_workspace_metadata({
-                            'wsi':{
-                                'id': self.ws_info.id
-                            },
-                            'new': {
-                                self.DATA_PALETTE_WS_METADATA_KEY : str(obj_info[0])
-                            }
-                        })
-
-        # 3) refresh local ws info
-        self.ws_info = WorkspaceInfo(self.ws.get_workspace_info({'id':self.ws_info.id}))
+        self._update_ws_palette_metadata(new_palette_info)
         return palette
+
+    def create_from_existing_palette(self, existing_data_palette):
+        # 1) make sure we can actually do it
+        dp_target_ref = self._get_root_data_palette_ref()
+        if dp_target_ref is not None:
+            raise ValueError('Cannot copy data_palette- a data palette already exists in that workspace.')
+
+        dp_source_ref = existing_data_palette._get_root_data_palette_ref()
+        if dp_source_ref is None:
+            # data palette did not exist, so we don't have to copy over anything
+            return {}
+
+        # 2) make the copy
+        new_palette_info = self.ws.copy_object({'from':{'ref': dp_source_ref}, 'to':{'wsid': self.ws_info.id, 'name': 'data_palette'} })
+
+        # 3) update ws metadata
+        self._update_ws_palette_metadata(new_palette_info)
+        return {}
 
 
     def _get_root_data_palette_objid(self):
@@ -249,7 +257,17 @@ class DataPalette():
         self.palette_ref = str(self.ws_info.id) + '/' + str(dp_id)
         return self.palette_ref
 
-
+    def _update_ws_palette_metadata(self, palette_obj_info):
+        self.ws.alter_workspace_metadata({
+                            'wsi':{
+                                'id': self.ws_info.id
+                            },
+                            'new': {
+                                self.DATA_PALETTE_WS_METADATA_KEY : str(palette_obj_info[0])
+                            }
+                        })
+        # refresh local ws info
+        self.ws_info = WorkspaceInfo(self.ws.get_workspace_info({'id':self.ws_info.id}))
 
 
 

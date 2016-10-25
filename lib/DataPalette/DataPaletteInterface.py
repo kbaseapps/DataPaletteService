@@ -78,6 +78,22 @@ class DataPaletteInterface():
         return dp.remove(refs=params['refs'])
 
 
+    def copy_palette(self, ctx, params):
+        token = self._extract_token(ctx)
+
+        if 'from_workspace' not in params:
+            raise ValueError('missing required field "from_workspace" in parameters to copy_palette')
+        if 'to_workspace' not in params:
+            raise ValueError('missing required field "to_workspace" in parameters to copy_palette')
+        if params['from_workspace'] is params['to_workspace']:
+            raise ValueError('"from_workspace" is identical to "to_workspace" in parameters to copy_palette')
+        
+        existing_palette = DataPalette(params['from_workspace'], token=token, ws_url=self.ws_url)
+        new_palette = DataPalette(params['to_workspace'], token=token, ws_url=self.ws_url)
+
+        return new_palette.create_from_existing_palette(existing_palette)
+
+
 
     def _remove_duplicate_data(self, data):
         # Note: this is a target for optimization
