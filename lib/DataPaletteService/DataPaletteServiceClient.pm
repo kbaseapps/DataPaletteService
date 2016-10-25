@@ -526,6 +526,103 @@ CopyPaletteResult is a reference to a hash where the following keys are defined
     }
 }
  
+
+
+=head2 set_palette_for_ws
+
+  $result = $obj->set_palette_for_ws($params)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$params is a DataPaletteService.SetPaletteForWsParams
+$result is a DataPaletteService.SetPaletteForWsResult
+SetPaletteForWsParams is a reference to a hash where the following keys are defined:
+	workspace has a value which is a DataPaletteService.ws_name_or_id
+	palette_name_or_id has a value which is a string
+ws_name_or_id is a string
+SetPaletteForWsResult is a reference to a hash where the following keys are defined
+
+</pre>
+
+=end html
+
+=begin text
+
+$params is a DataPaletteService.SetPaletteForWsParams
+$result is a DataPaletteService.SetPaletteForWsResult
+SetPaletteForWsParams is a reference to a hash where the following keys are defined:
+	workspace has a value which is a DataPaletteService.ws_name_or_id
+	palette_name_or_id has a value which is a string
+ws_name_or_id is a string
+SetPaletteForWsResult is a reference to a hash where the following keys are defined
+
+
+=end text
+
+=item Description
+
+In case the WS metadata is corrupted, or there was a manual
+setup of the data palette, this function can be used to set
+the workspace metadata to the specified palette in that workspace
+by name or ID.  If you omit the name_or_id, then the code will
+search for an existing data palette in that workspace.  Be careful
+with this one- you could thrash your palette!
+
+=back
+
+=cut
+
+ sub set_palette_for_ws
+{
+    my($self, @args) = @_;
+
+# Authentication: required
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function set_palette_for_ws (received $n, expecting 1)");
+    }
+    {
+	my($params) = @args;
+
+	my @_bad_arguments;
+        (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"params\" (value was \"$params\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to set_palette_for_ws:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'set_palette_for_ws');
+	}
+    }
+
+    my $url = $self->{url};
+    my $result = $self->{client}->call($url, $self->{headers}, {
+	    method => "DataPaletteService.set_palette_for_ws",
+	    params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'set_palette_for_ws',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method set_palette_for_ws",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'set_palette_for_ws',
+				       );
+    }
+}
+ 
   
 sub status
 {
@@ -569,16 +666,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'copy_palette',
+                method_name => 'set_palette_for_ws',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method copy_palette",
+            error => "Error invoking method set_palette_for_ws",
             status_line => $self->{client}->status_line,
-            method_name => 'copy_palette',
+            method_name => 'set_palette_for_ws',
         );
     }
 }
@@ -953,6 +1050,64 @@ to_workspace has a value which is a DataPaletteService.ws_name_or_id
 
 
 =head2 CopyPaletteResult
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined
+
+=end text
+
+=back
+
+
+
+=head2 SetPaletteForWsParams
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+workspace has a value which is a DataPaletteService.ws_name_or_id
+palette_name_or_id has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+workspace has a value which is a DataPaletteService.ws_name_or_id
+palette_name_or_id has a value which is a string
+
+
+=end text
+
+=back
+
+
+
+=head2 SetPaletteForWsResult
 
 =over 4
 

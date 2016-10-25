@@ -7,6 +7,7 @@ from pprint import pprint
 from biokbase.workspace.client import Workspace as workspaceService
 from DataPaletteService.DataPaletteServiceImpl import DataPaletteService
 from DataPaletteService.DataPaletteServiceServer import MethodContext
+from DataPalette.DataPalette import DataPalette
 
 from TestUtil import TestUtil
 
@@ -86,7 +87,7 @@ class SimpleTest(unittest.TestCase):
             })
 
         d = dps.list_data(self.ctx(),{'workspaces':[ws_name1]})[0]
-        pprint(d)
+
         self.assertIn('data', d)
         self.assertEqual(len(d['data']),1)
         self.assertEqual(d['data'][0]['ref'], objs[0]['abs_ref'])
@@ -106,7 +107,7 @@ class SimpleTest(unittest.TestCase):
             })
 
         d = dps.list_data(self.ctx(),{'workspaces':[ws_name1]})[0]
-        pprint(d)
+
         self.assertEqual(len(d['data']),3)
         self.assertEqual(d['data'][0]['ref'], objs[0]['abs_ref'])
         self.assertEqual(d['data'][1]['ref'], objsV2[1]['abs_ref'])
@@ -121,7 +122,7 @@ class SimpleTest(unittest.TestCase):
             })
 
         d = dps.list_data(self.ctx(),{'workspaces':[ws_name1]})[0]
-        pprint(d)
+        
         self.assertEqual(len(d['data']),3)
         self.assertEqual(d['data'][0]['ref'], objsV3[0]['abs_ref'])
         self.assertEqual(d['data'][1]['ref'], objsV2[1]['abs_ref'])
@@ -181,8 +182,18 @@ class SimpleTest(unittest.TestCase):
         self.assertEqual(d['data'][1]['ref'], objsV3[2]['abs_ref'])
         self.assertEqual(d['data'][2]['ref'], objsV3[0]['abs_ref'])
 
+        # corrupt the WS, and list_data should produce an error:
+        self.ws().alter_workspace_metadata({
+                            'wsi':{ 'workspace': ws_name3 },
+                            'new': { DataPalette.DATA_PALETTE_WS_METADATA_KEY : '' }
+                        })
+        with self.assertRaises(ValueError) as error:
+            dps.list_data(self.ctx(),{'workspaces':[ws_name3]})[0]
+        self.assertTrue('was corrupted.  It is not set to an object ID.' in str(error.exception))
 
-
-
+        # but we can fix!
+        dps.set_palette_for_ws(self.ctx(),{'workspace':ws_name3})
+        d = dps.list_data(self.ctx(),{'workspaces':[ws_name3]})[0]
+        self.assertEqual(len(d['data']),3)
 
 

@@ -24,7 +24,7 @@ class DataPaletteService:
     #########################################
     VERSION = "0.0.1"
     GIT_URL = "git@github.com:kbaseapps/DataPaletteService"
-    GIT_COMMIT_HASH = "40396b31e1fb2a851e2ce66cc9b6c015c8e2f780"
+    GIT_COMMIT_HASH = "e1ff94302996798531ae377ce775b98f4533bfe6"
     
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -166,6 +166,32 @@ class DataPaletteService:
         # At some point might do deeper type checking...
         if not isinstance(result, dict):
             raise ValueError('Method copy_palette return value ' +
+                             'result is not type dict as required.')
+        # return the results
+        return [result]
+
+    def set_palette_for_ws(self, ctx, params):
+        """
+        In case the WS metadata is corrupted, or there was a manual
+        setup of the data palette, this function can be used to set
+        the workspace metadata to the specified palette in that workspace
+        by name or ID.  If you omit the name_or_id, then the code will
+        search for an existing data palette in that workspace.  Be careful
+        with this one- you could thrash your palette!
+        :param params: instance of type "SetPaletteForWsParams" -> structure:
+           parameter "workspace" of type "ws_name_or_id", parameter
+           "palette_name_or_id" of String
+        :returns: instance of type "SetPaletteForWsResult" -> structure:
+        """
+        # ctx is the context object
+        # return variables are: result
+        #BEGIN set_palette_for_ws
+        result = self.data_palette_interface.set_palette_for_ws(ctx, params)
+        #END set_palette_for_ws
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, dict):
+            raise ValueError('Method set_palette_for_ws return value ' +
                              'result is not type dict as required.')
         # return the results
         return [result]

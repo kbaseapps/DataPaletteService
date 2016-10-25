@@ -128,6 +128,23 @@ class DataPaletteService(object):
             'DataPaletteService.copy_palette',
             [params], self._service_ver, context)
 
+    def set_palette_for_ws(self, params, context=None):
+        """
+        In case the WS metadata is corrupted, or there was a manual
+        setup of the data palette, this function can be used to set
+        the workspace metadata to the specified palette in that workspace
+        by name or ID.  If you omit the name_or_id, then the code will
+        search for an existing data palette in that workspace.  Be careful
+        with this one- you could thrash your palette!
+        :param params: instance of type "SetPaletteForWsParams" -> structure:
+           parameter "workspace" of type "ws_name_or_id", parameter
+           "palette_name_or_id" of String
+        :returns: instance of type "SetPaletteForWsResult" -> structure:
+        """
+        return self._client.call_method(
+            'DataPaletteService.set_palette_for_ws',
+            [params], self._service_ver, context)
+
     def status(self, context=None):
         return self._client.call_method('DataPaletteService.status',
                                         [], self._service_ver, context)

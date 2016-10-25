@@ -345,6 +345,10 @@ class Application(object):
                              name='DataPaletteService.copy_palette',
                              types=[dict])
         self.method_authentication['DataPaletteService.copy_palette'] = 'required'
+        self.rpc_service.add(impl_DataPaletteService.set_palette_for_ws,
+                             name='DataPaletteService.set_palette_for_ws',
+                             types=[dict])
+        self.method_authentication['DataPaletteService.set_palette_for_ws'] = 'required'
         self.rpc_service.add(impl_DataPaletteService.status,
                              name='DataPaletteService.status',
                              types=[dict])

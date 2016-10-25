@@ -74,4 +74,23 @@ module DataPaletteService {
 
     funcdef copy_palette(CopyPaletteParams params)
         returns (CopyPaletteResult result) authentication required;
+
+
+    typedef structure {
+        ws_name_or_id workspace;
+        string palette_name_or_id;
+    } SetPaletteForWsParams;
+
+    typedef structure {
+
+    } SetPaletteForWsResult;
+
+    /* In case the WS metadata is corrupted, or there was a manual
+    setup of the data palette, this function can be used to set
+    the workspace metadata to the specified palette in that workspace
+    by name or ID.  If you omit the name_or_id, then the code will
+    search for an existing data palette in that workspace.  Be careful
+    with this one- you could thrash your palette! */
+    funcdef set_palette_for_ws(SetPaletteForWsParams params)
+        returns (SetPaletteForWsResult result) authentication required;
 };

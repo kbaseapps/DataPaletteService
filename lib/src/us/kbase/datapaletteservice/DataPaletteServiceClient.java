@@ -233,6 +233,29 @@ public class DataPaletteServiceClient {
         return res.get(0);
     }
 
+    /**
+     * <p>Original spec-file function name: set_palette_for_ws</p>
+     * <pre>
+     * In case the WS metadata is corrupted, or there was a manual
+     * setup of the data palette, this function can be used to set
+     * the workspace metadata to the specified palette in that workspace
+     * by name or ID.  If you omit the name_or_id, then the code will
+     * search for an existing data palette in that workspace.  Be careful
+     * with this one- you could thrash your palette!
+     * </pre>
+     * @param   params   instance of type {@link us.kbase.datapaletteservice.SetPaletteForWsParams SetPaletteForWsParams}
+     * @return   parameter "result" of type {@link us.kbase.datapaletteservice.SetPaletteForWsResult SetPaletteForWsResult}
+     * @throws IOException if an IO exception occurs
+     * @throws JsonClientException if a JSON RPC exception occurs
+     */
+    public SetPaletteForWsResult setPaletteForWs(SetPaletteForWsParams params, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+        List<Object> args = new ArrayList<Object>();
+        args.add(params);
+        TypeReference<List<SetPaletteForWsResult>> retType = new TypeReference<List<SetPaletteForWsResult>>() {};
+        List<SetPaletteForWsResult> res = caller.jsonrpcCall("DataPaletteService.set_palette_for_ws", args, retType, true, true, jsonRpcContext, this.serviceVersion);
+        return res.get(0);
+    }
+
     public Map<String, Object> status(RpcContext... jsonRpcContext) throws IOException, JsonClientException {
         List<Object> args = new ArrayList<Object>();
         TypeReference<List<Map<String, Object>>> retType = new TypeReference<List<Map<String, Object>>>() {};

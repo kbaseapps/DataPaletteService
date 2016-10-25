@@ -93,7 +93,19 @@ class DataPaletteInterface():
 
         return new_palette.create_from_existing_palette(existing_palette)
 
+    def set_palette_for_ws(self, ctx, params):
 
+        token = self._extract_token(ctx)
+
+        if 'workspace' not in params:
+            raise ValueError('missing required field "from_workspace" in parameters to set_palette_for_ws')
+        palette_name_or_id = None
+        if 'palette_name_or_id' in params:
+            palette_name_or_id = params['palette_name_or_id']
+
+        palette = DataPalette(params['workspace'], token=token, ws_url=self.ws_url)
+        palette.set_palette_to_obj(new_data_palette_name_or_id=palette_name_or_id)
+        return {}
 
     def _remove_duplicate_data(self, data):
         # Note: this is a target for optimization

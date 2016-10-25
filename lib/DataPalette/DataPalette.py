@@ -23,6 +23,8 @@ class DataPalette():
 
     PROVENANCE = [{'service':'DataPaletteService'}]
     DATA_PALETTE_WS_METADATA_KEY = 'data_palette_id'
+    DEFAULT_PALETTE_OBJ_NAME = 'data_palette'
+    PALETTE_OBJ_WS_TYPE = 'DataPalette.DataPalette'
 
     # set of types that cannot be added to a data palette, add to configuration
     PROHIBITED_DATA_TYPES = ['KBaseReport.Report', 'KBaseNarrative.Narrative', 'DataPalette.DataPalette']
@@ -185,7 +187,7 @@ class DataPalette():
         obj_info = self.ws.save_objects({
                 'id':self.ws_info.id,
                 'objects': [{
-                    'type': 'DataPalette.DataPalette',
+                    'type': self.PALETTE_OBJ_WS_TYPE,
                     'objid': self._get_root_data_palette_objid(),
                     'data': palette,
                     'provenance': self.PROVENANCE,
@@ -211,8 +213,8 @@ class DataPalette():
         new_palette_info = self.ws.save_objects({
                 'id':self.ws_info.id,
                 'objects': [{
-                    'type':'DataPalette.DataPalette',
-                    'name':'data_palette',
+                    'type': self.PALETTE_OBJ_WS_TYPE,
+                    'name': self.DEFAULT_PALETTE_OBJ_NAME,
                     'data': palette,
                     'provenance':self.PROVENANCE,
                     'hidden':1
@@ -235,9 +237,28 @@ class DataPalette():
             return {}
 
         # 2) make the copy
-        new_palette_info = self.ws.copy_object({'from':{'ref': dp_source_ref}, 'to':{'wsid': self.ws_info.id, 'name': 'data_palette'} })
+        new_palette_info = self.ws.copy_object({
+                                    'from':{'ref': dp_source_ref},
+                                    'to':{'wsid': self.ws_info.id, 'name': self.DEFAULT_PALETTE_OBJ_NAME } 
+                                })
 
         # 3) update ws metadata
+        self._update_ws_palette_metadata(new_palette_info)
+        return {}
+
+
+    def set_palette_to_obj(self, new_data_palette_name_or_id):
+
+        if new_data_palette_name_or_id is None:
+            new_data_palette_name_or_id = self.DEFAULT_PALETTE_OBJ_NAME
+
+        new_palette_ref = str(self.ws_info.id) + '/' + str(new_data_palette_name_or_id)
+        new_palette_info = self._get_object_info([{'ref':new_palette_ref}])[0]
+
+        if not str(new_palette_info[2]).startswith(self.PALETTE_OBJ_WS_TYPE):
+            raise ValueError('Cannot set data palette for workspace to non-palette type.  Type of (' +
+                                new_palette_ref + ') was: ' + str(new_palette_info[1])) 
+
         self._update_ws_palette_metadata(new_palette_info)
         return {}
 
@@ -254,6 +275,8 @@ class DataPalette():
         if self.DATA_PALETTE_WS_METADATA_KEY not in self.ws_info.metadata:
             return None
         dp_id = self.ws_info.metadata[self.DATA_PALETTE_WS_METADATA_KEY]
+        if not str(dp_id).isdigit():
+            raise ValueError('Warning: WS metadata for '+str(self.ws_info.id)+ 'was corrupted.  It is not set to an object ID.  It was: ' + str(dp_id));
         self.palette_ref = str(self.ws_info.id) + '/' + str(dp_id)
         return self.palette_ref
 
