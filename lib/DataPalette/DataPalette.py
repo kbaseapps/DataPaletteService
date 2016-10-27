@@ -1,5 +1,5 @@
 
-from biokbase.workspace.client import Workspace
+from Workspace.WorkspaceClient import Workspace
 
 
 class WorkspaceInfo():
@@ -27,17 +27,25 @@ class DataPalette():
                              'KBaseNarrative.Narrative',
                              'DataPalette.DataPalette']
 
-    def __init__(self, ws_name_or_id, ws_url=None, token=None):
-        if ws_url is None:
-            raise ValueError('ws_url was not defined')
-        if token is None:
-            print('DataPalette warning: token was not set')
-        self.ws = Workspace(ws_url, token=token)
-
-        if str(ws_name_or_id).isdigit():
-            self.ws_info = WorkspaceInfo(self.ws.get_workspace_info({'id': int(ws_name_or_id)}))
+    def __init__(self, ws_name_or_id, ws_url=None, token=None, ws_info=None, ws=None):
+        if ws:
+            self.ws = ws
         else:
-            self.ws_info = WorkspaceInfo(self.ws.get_workspace_info({
+            if ws_url is None:
+                raise ValueError('ws_url was not defined')
+            if token is None:
+                print('DataPalette warning: token was not set')
+            self.ws = Workspace(ws_url, token=token)
+
+        if ws_info:
+            if ws_name_or_id:
+                raise ValueError("Either ws_name_or_id or ws_info should be set")
+            self.ws_info = WorkspaceInfo(ws_info)
+        else:
+            if str(ws_name_or_id).isdigit():
+                self.ws_info = WorkspaceInfo(self.ws.get_workspace_info({'id': int(ws_name_or_id)}))
+            else:
+                self.ws_info = WorkspaceInfo(self.ws.get_workspace_info({
                                                                     'workspace': str(ws_name_or_id)
                                                                     }))
 

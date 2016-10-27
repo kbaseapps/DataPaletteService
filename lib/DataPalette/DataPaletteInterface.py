@@ -1,5 +1,6 @@
 
 from DataPalette import DataPalette
+from Workspace.WorkspaceClient import Workspace
 
 class DataPaletteInterface():
     '''
@@ -21,11 +22,29 @@ class DataPaletteInterface():
             raise ValueError('missing required field "workspaces" in parameters to list_data')
         if not isinstance(params['workspaces'], list):
             raise ValueError('"workspaces" field must be a list')
+        workspaces = params['workspaces']
+
+        ws = Workspace(self.ws_url, token=token)
+        ws_info_list = []
+        if len(workspaces) == 1:
+            workspace = workspaces[0]
+            list_params = {}
+            if str(workspace).isdigit():
+                list_params['id'] = int(workspace)
+            else:
+                list_params['workspace'] = str(workspace)
+            ws_info_list.append(ws.get_workspace_info(list_params))
+        else:
+            ws_map = {key: True for key in workspaces}
+            for ws_info in ws.list_workspace_info({'perm': 'r'}):
+                if ws_info[1] in ws_map or str(ws_info[0]) in ws_map:
+                    ws_info_list.append(ws_info)
+
 
         data = []
         dp_list_filter = {}
-        for w in params['workspaces']:
-            dp = DataPalette(w, token=token, ws_url=self.ws_url)
+        for ws_info in ws_info_list:
+            dp = DataPalette(None, token=token, ws_url=self.ws_url, ws_info=ws_info)
             data = data + dp.list(dp_list_filter)
 
         data = self._remove_duplicate_data(data)
