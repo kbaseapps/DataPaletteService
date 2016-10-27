@@ -44,7 +44,7 @@ class DataPaletteInterface():
         data = []
         dp_list_filter = {}
         for ws_info in ws_info_list:
-            dp = DataPalette(None, token=token, ws_url=self.ws_url, ws_info=ws_info)
+            dp = DataPalette(None, ws_info=ws_info, ws=ws)
             data = data + dp.list(dp_list_filter)
 
         data = self._remove_duplicate_data(data)
