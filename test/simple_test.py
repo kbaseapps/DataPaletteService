@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 import os
+import time
 
 from pprint import pprint
 
@@ -197,3 +198,15 @@ class SimpleTest(unittest.TestCase):
         self.assertEqual(len(d['data']),3)
 
 
+    def test_bulk_list_sets(self):
+        ids = []
+        for ws_info in self.ws().list_workspace_info({'perm': 'r', 'excludeGlobal': 1}):
+            if ws_info[4] < 1000:
+                ids.append(str(ws_info[0]))
+            else:
+                print("Workspace: " + ws_info[1] + ", size=" + str(ws_info[4]) + " (skipped)")
+
+        print("Number of workspaces for bulk list_data: " + str(len(ids)))
+        t1 = time.time()
+        ret = self.getImpl().list_data(self.ctx(), {'workspaces': ids})[0]['data']
+        print("Objects found: " + str(len(ret)) + ", time=" + str(time.time() - t1))
