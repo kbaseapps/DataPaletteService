@@ -17,6 +17,10 @@ module DataPaletteService {
     /* String with numeric ID of workspace (working as key in mapping). */
     typedef string ws_text_id;
 
+    /*
+        data_palette_refs - mapping from workspace ID to reference to DataPalette
+            container object.
+    */
     typedef structure {
         list <DataInfo> data;
         mapping<ws_text_id, ws_ref> data_palette_refs;

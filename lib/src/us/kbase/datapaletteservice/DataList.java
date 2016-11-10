@@ -14,7 +14,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * <p>Original spec-file type: DataList</p>
- * 
+ * <pre>
+ * data_palette_refs - mapping from workspace ID to reference to DataPalette
+ *     container object.
+ * </pre>
  * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)

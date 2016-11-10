@@ -816,6 +816,12 @@ a string
 
 
 
+=item Description
+
+data_palette_refs - mapping from workspace ID to reference to DataPalette
+    container object.
+
+
 =item Definition
 
 =begin html
