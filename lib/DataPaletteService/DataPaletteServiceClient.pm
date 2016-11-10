@@ -119,6 +119,7 @@ ListDataParams is a reference to a hash where the following keys are defined:
 ws_name_or_id is a string
 DataList is a reference to a hash where the following keys are defined:
 	data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
+	data_palette_refs has a value which is a reference to a hash where the key is a DataPaletteService.ws_text_id and the value is a DataPaletteService.ws_ref
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
@@ -143,6 +144,7 @@ username is a string
 ws_id is an int
 ws_name is a string
 usermeta is a reference to a hash where the key is a string and the value is a string
+ws_text_id is a string
 
 </pre>
 
@@ -157,6 +159,7 @@ ListDataParams is a reference to a hash where the following keys are defined:
 ws_name_or_id is a string
 DataList is a reference to a hash where the following keys are defined:
 	data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
+	data_palette_refs has a value which is a reference to a hash where the key is a DataPaletteService.ws_text_id and the value is a DataPaletteService.ws_ref
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
@@ -181,6 +184,7 @@ username is a string
 ws_id is an int
 ws_name is a string
 usermeta is a reference to a hash where the key is a string and the value is a string
+ws_text_id is a string
 
 
 =end text
@@ -775,6 +779,37 @@ info has a value which is a Workspace.object_info
 
 
 
+=head2 ws_text_id
+
+=over 4
+
+
+
+=item Description
+
+String with numeric ID of workspace (working as key in mapping).
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a string
+</pre>
+
+=end html
+
+=begin text
+
+a string
+
+=end text
+
+=back
+
+
+
 =head2 DataList
 
 =over 4
@@ -788,6 +823,7 @@ info has a value which is a Workspace.object_info
 <pre>
 a reference to a hash where the following keys are defined:
 data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
+data_palette_refs has a value which is a reference to a hash where the key is a DataPaletteService.ws_text_id and the value is a DataPaletteService.ws_ref
 
 </pre>
 
@@ -797,6 +833,7 @@ data has a value which is a reference to a list where each element is a DataPale
 
 a reference to a hash where the following keys are defined:
 data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
+data_palette_refs has a value which is a reference to a hash where the key is a DataPaletteService.ws_text_id and the value is a DataPaletteService.ws_ref
 
 
 =end text

@@ -16,16 +16,16 @@ class DataPaletteService:
     
     '''
 
-    ######## WARNING FOR GEVENT USERS #######
+    ######## WARNING FOR GEVENT USERS ####### noqa
     # Since asynchronous IO can lead to methods - even the same method -
     # interrupting each other, you must be *very* careful when using global
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
-    #########################################
+    ######################################### noqa
     VERSION = "0.0.1"
-    GIT_URL = "git@github.com:kbaseapps/DataPaletteService"
-    GIT_COMMIT_HASH = "e1ff94302996798531ae377ce775b98f4533bfe6"
-    
+    GIT_URL = "https://github.com/rsutormin/DataPaletteService"
+    GIT_COMMIT_HASH = "617a2d23a836613859d394eba85e9801d3c1f46d"
+
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
 
@@ -37,7 +37,7 @@ class DataPaletteService:
         self.data_palette_interface = DataPaletteInterface(self.wsURL)
         #END_CONSTRUCTOR
         pass
-    
+
 
     def list_data(self, ctx, params):
         """
@@ -89,7 +89,10 @@ class DataPaletteService:
            kbasetest:my_workspace.), parameter "chsum" of String, parameter
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
-           the user.) -> mapping from String to String
+           the user.) -> mapping from String to String, parameter
+           "data_palette_refs" of mapping from type "ws_text_id" (String with
+           numeric ID of workspace (working as key in mapping).) to type
+           "ws_ref" (@id ws)
         """
         # ctx is the context object
         # return variables are: data_list
@@ -195,7 +198,6 @@ class DataPaletteService:
                              'result is not type dict as required.')
         # return the results
         return [result]
-
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK", 'message': "", 'version': self.VERSION, 

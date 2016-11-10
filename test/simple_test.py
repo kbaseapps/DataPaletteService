@@ -75,6 +75,8 @@ class SimpleTest(unittest.TestCase):
         d = dps.list_data(self.ctx(),{'workspaces':[ws_name1]})[0]
         self.assertIn('data', d)
         self.assertEqual(len(d['data']),0)
+        self.assertIn('data_palette_refs', d)
+        self.assertEqual(len(d['data_palette_refs']),0)
 
         # create objects in a different WS, add one to the palette
         ws_name2 = self.test_util.createWorkspace()
@@ -92,6 +94,12 @@ class SimpleTest(unittest.TestCase):
         self.assertIn('data', d)
         self.assertEqual(len(d['data']),1)
         self.assertEqual(d['data'][0]['ref'], objs[0]['abs_ref'])
+        self.assertIn('data_palette_refs', d)
+        self.assertEqual(len(d['data_palette_refs']),1)
+        ws_id1 = self.test_util.ws().get_workspace_info({'workspace': ws_name1})[0]
+        dp_ref = d['data_palette_refs'][str(ws_id1)]
+        dp_type = self.test_util.ws().get_object_info_new({'objects': [{'ref': dp_ref}]})[0][2]
+        self.assertTrue(dp_type.startswith("DataPalette.DataPalette"))
 
         # load the objects again so we have multiple versions of these objects
         objsV2 = self.load_object_data(ws_name2)

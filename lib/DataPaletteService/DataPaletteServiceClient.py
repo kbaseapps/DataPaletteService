@@ -83,7 +83,10 @@ class DataPaletteService(object):
            kbasetest:my_workspace.), parameter "chsum" of String, parameter
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
-           the user.) -> mapping from String to String
+           the user.) -> mapping from String to String, parameter
+           "data_palette_refs" of mapping from type "ws_text_id" (String with
+           numeric ID of workspace (working as key in mapping).) to type
+           "ws_ref" (@id ws)
         """
         return self._client.call_method(
             'DataPaletteService.list_data',

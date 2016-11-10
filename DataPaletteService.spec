@@ -14,8 +14,12 @@ module DataPaletteService {
         Workspace.object_info info;
     } DataInfo;
 
+    /* String with numeric ID of workspace (working as key in mapping). */
+    typedef string ws_text_id;
+
     typedef structure {
         list <DataInfo> data;
+        mapping<ws_text_id, ws_ref> data_palette_refs;
     } DataList;
 
 
