@@ -15,19 +15,24 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * <p>Original spec-file type: ListDataParams</p>
  * <pre>
- * todo: pagination?
+ * workspaces - list of workspace names or IDs (converted to strings),
+ * includeMetadata - if 1, includes object metadata, if 0, does not. Default 0.
+ * TODO: pagination?
  * </pre>
  * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("com.googlecode.jsonschema2pojo")
 @JsonPropertyOrder({
-    "workspaces"
+    "workspaces",
+    "includeMetadata"
 })
 public class ListDataParams {
 
     @JsonProperty("workspaces")
     private List<String> workspaces;
+    @JsonProperty("includeMetadata")
+    private Long includeMetadata;
     private Map<java.lang.String, Object> additionalProperties = new HashMap<java.lang.String, Object>();
 
     @JsonProperty("workspaces")
@@ -45,6 +50,21 @@ public class ListDataParams {
         return this;
     }
 
+    @JsonProperty("includeMetadata")
+    public Long getIncludeMetadata() {
+        return includeMetadata;
+    }
+
+    @JsonProperty("includeMetadata")
+    public void setIncludeMetadata(Long includeMetadata) {
+        this.includeMetadata = includeMetadata;
+    }
+
+    public ListDataParams withIncludeMetadata(Long includeMetadata) {
+        this.includeMetadata = includeMetadata;
+        return this;
+    }
+
     @JsonAnyGetter
     public Map<java.lang.String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -57,7 +77,7 @@ public class ListDataParams {
 
     @Override
     public java.lang.String toString() {
-        return ((((("ListDataParams"+" [workspaces=")+ workspaces)+", additionalProperties=")+ additionalProperties)+"]");
+        return ((((((("ListDataParams"+" [workspaces=")+ workspaces)+", includeMetadata=")+ includeMetadata)+", additionalProperties=")+ additionalProperties)+"]");
     }
 
 }

@@ -24,7 +24,7 @@ class DataPaletteService:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/rsutormin/DataPaletteService"
-    GIT_COMMIT_HASH = "3bf0104e4a8d5aba43b7e54c66d69cddf7565258"
+    GIT_COMMIT_HASH = "54ee0d9aaa7eb24e4c6b54b2661737a94afd5568"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -41,9 +41,12 @@ class DataPaletteService:
 
     def list_data(self, ctx, params):
         """
-        :param params: instance of type "ListDataParams" (todo: pagination?)
-           -> structure: parameter "workspaces" of list of type
-           "ws_name_or_id"
+        :param params: instance of type "ListDataParams" (workspaces - list
+           of workspace names or IDs (converted to strings), includeMetadata
+           - if 1, includes object metadata, if 0, does not. Default 0. TODO:
+           pagination?) -> structure: parameter "workspaces" of list of type
+           "ws_name_or_id", parameter "includeMetadata" of type "boolean"
+           (@range [0,1])
         :returns: instance of type "DataList" (data_palette_refs - mapping
            from workspace ID to reference to DataPalette container object.)
            -> structure: parameter "data" of list of type "DataInfo" ->

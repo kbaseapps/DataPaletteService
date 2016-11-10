@@ -23,6 +23,7 @@ class DataPaletteInterface():
         if not isinstance(params['workspaces'], list):
             raise ValueError('"workspaces" field must be a list')
         workspaces = params['workspaces']
+        includeMetadata = params.get('includeMetadata', 0)
 
         ws = Workspace(self.ws_url, token=token)
         ws_info_list = []
@@ -42,7 +43,7 @@ class DataPaletteInterface():
 
 
         data = []
-        dp_list_filter = {}
+        dp_list_filter = {'includeMetadata': includeMetadata}
         data_palette_refs = {}
         for ws_info in ws_info_list:
             dp = DataPalette(None, ws_info=ws_info, ws=ws)

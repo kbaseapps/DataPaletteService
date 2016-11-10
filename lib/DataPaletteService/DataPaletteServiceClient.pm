@@ -116,7 +116,9 @@ $params is a DataPaletteService.ListDataParams
 $data_list is a DataPaletteService.DataList
 ListDataParams is a reference to a hash where the following keys are defined:
 	workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
+	includeMetadata has a value which is a DataPaletteService.boolean
 ws_name_or_id is a string
+boolean is an int
 DataList is a reference to a hash where the following keys are defined:
 	data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
 	data_palette_refs has a value which is a reference to a hash where the key is a DataPaletteService.ws_text_id and the value is a DataPaletteService.ws_ref
@@ -156,7 +158,9 @@ $params is a DataPaletteService.ListDataParams
 $data_list is a DataPaletteService.DataList
 ListDataParams is a reference to a hash where the following keys are defined:
 	workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
+	includeMetadata has a value which is a DataPaletteService.boolean
 ws_name_or_id is a string
+boolean is an int
 DataList is a reference to a hash where the following keys are defined:
 	data has a value which is a reference to a list where each element is a DataPaletteService.DataInfo
 	data_palette_refs has a value which is a reference to a hash where the key is a DataPaletteService.ws_text_id and the value is a DataPaletteService.ws_ref
@@ -747,6 +751,37 @@ a string
 
 
 
+=head2 boolean
+
+=over 4
+
+
+
+=item Description
+
+@range [0,1]
+
+
+=item Definition
+
+=begin html
+
+<pre>
+an int
+</pre>
+
+=end html
+
+=begin text
+
+an int
+
+=end text
+
+=back
+
+
+
 =head2 DataInfo
 
 =over 4
@@ -882,7 +917,9 @@ a string
 
 =item Description
 
-todo: pagination?
+workspaces - list of workspace names or IDs (converted to strings),
+includeMetadata - if 1, includes object metadata, if 0, does not. Default 0.
+TODO: pagination?
 
 
 =item Definition
@@ -892,6 +929,7 @@ todo: pagination?
 <pre>
 a reference to a hash where the following keys are defined:
 workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
+includeMetadata has a value which is a DataPaletteService.boolean
 
 </pre>
 
@@ -901,6 +939,7 @@ workspaces has a value which is a reference to a list where each element is a Da
 
 a reference to a hash where the following keys are defined:
 workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
+includeMetadata has a value which is a DataPaletteService.boolean
 
 
 =end text

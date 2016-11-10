@@ -8,6 +8,9 @@ module DataPaletteService {
 
     /* @id ws */
     typedef string ws_ref;
+    
+    /* @range [0,1] */
+    typedef int boolean;
 
     typedef structure {
         ws_ref ref;
@@ -29,9 +32,14 @@ module DataPaletteService {
 
     typedef string ws_name_or_id;
 
-    /* todo: pagination? */
+    /*
+        workspaces - list of workspace names or IDs (converted to strings),
+        includeMetadata - if 1, includes object metadata, if 0, does not. Default 0.
+        TODO: pagination?
+    */
     typedef structure {
         list <ws_name_or_id> workspaces;
+        boolean includeMetadata;
     } ListDataParams;
 
     funcdef list_data(ListDataParams params)
