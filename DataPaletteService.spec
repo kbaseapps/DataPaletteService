@@ -34,12 +34,12 @@ module DataPaletteService {
 
     /*
         workspaces - list of workspace names or IDs (converted to strings),
-        includeMetadata - if 1, includes object metadata, if 0, does not. Default 0.
+        include_metadata - if 1, includes object metadata, if 0, does not. Default 0.
         TODO: pagination?
     */
     typedef structure {
         list <ws_name_or_id> workspaces;
-        boolean includeMetadata;
+        boolean include_metadata;
     } ListDataParams;
 
     funcdef list_data(ListDataParams params)

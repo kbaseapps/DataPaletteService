@@ -116,7 +116,7 @@ $params is a DataPaletteService.ListDataParams
 $data_list is a DataPaletteService.DataList
 ListDataParams is a reference to a hash where the following keys are defined:
 	workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
-	includeMetadata has a value which is a DataPaletteService.boolean
+	include_metadata has a value which is a DataPaletteService.boolean
 ws_name_or_id is a string
 boolean is an int
 DataList is a reference to a hash where the following keys are defined:
@@ -158,7 +158,7 @@ $params is a DataPaletteService.ListDataParams
 $data_list is a DataPaletteService.DataList
 ListDataParams is a reference to a hash where the following keys are defined:
 	workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
-	includeMetadata has a value which is a DataPaletteService.boolean
+	include_metadata has a value which is a DataPaletteService.boolean
 ws_name_or_id is a string
 boolean is an int
 DataList is a reference to a hash where the following keys are defined:
@@ -918,7 +918,7 @@ a string
 =item Description
 
 workspaces - list of workspace names or IDs (converted to strings),
-includeMetadata - if 1, includes object metadata, if 0, does not. Default 0.
+include_metadata - if 1, includes object metadata, if 0, does not. Default 0.
 TODO: pagination?
 
 
@@ -929,7 +929,7 @@ TODO: pagination?
 <pre>
 a reference to a hash where the following keys are defined:
 workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
-includeMetadata has a value which is a DataPaletteService.boolean
+include_metadata has a value which is a DataPaletteService.boolean
 
 </pre>
 
@@ -939,7 +939,7 @@ includeMetadata has a value which is a DataPaletteService.boolean
 
 a reference to a hash where the following keys are defined:
 workspaces has a value which is a reference to a list where each element is a DataPaletteService.ws_name_or_id
-includeMetadata has a value which is a DataPaletteService.boolean
+include_metadata has a value which is a DataPaletteService.boolean
 
 
 =end text

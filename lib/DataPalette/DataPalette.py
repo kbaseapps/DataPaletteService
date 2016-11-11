@@ -58,8 +58,8 @@ class DataPalette():
             return []
 
         palette = self._get_data_palette()
-        includeMetadata = options.get('includeMetadata', 0)
-        palette = self._attach_palette_data_info(palette, includeMetadata)
+        include_metadata = options.get('include_metadata', 0)
+        palette = self._attach_palette_data_info(palette, include_metadata)
 
         return palette['data']
 
@@ -174,14 +174,14 @@ class DataPalette():
                                  ') that cannot be added to a data palette.')
 
 
-    def _attach_palette_data_info(self, palette, includeMetadata = 0):
+    def _attach_palette_data_info(self, palette, include_metadata = 0):
         # TODO: make sure we get object info via reference chain
         if len(palette['data']) == 0:
             return palette
 
         all_info = self.ws.get_object_info_new({
                                                'objects': palette['data'],
-                                               'includeMetadata': includeMetadata
+                                               'includeMetadata': include_metadata
                                                })
 
         for k in range(0, len(all_info)):

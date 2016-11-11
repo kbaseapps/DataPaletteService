@@ -89,7 +89,7 @@ class SimpleTest(unittest.TestCase):
                 }]
             })
 
-        d = dps.list_data(self.ctx(),{'workspaces':[ws_name1], 'includeMetadata': 1})[0]
+        d = dps.list_data(self.ctx(),{'workspaces':[ws_name1], 'include_metadata': 1})[0]
 
         self.assertIn('data', d)
         self.assertEqual(len(d['data']),1)

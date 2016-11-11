@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * <p>Original spec-file type: ListDataParams</p>
  * <pre>
  * workspaces - list of workspace names or IDs (converted to strings),
- * includeMetadata - if 1, includes object metadata, if 0, does not. Default 0.
+ * include_metadata - if 1, includes object metadata, if 0, does not. Default 0.
  * TODO: pagination?
  * </pre>
  * 
@@ -25,13 +25,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @Generated("com.googlecode.jsonschema2pojo")
 @JsonPropertyOrder({
     "workspaces",
-    "includeMetadata"
+    "include_metadata"
 })
 public class ListDataParams {
 
     @JsonProperty("workspaces")
     private List<String> workspaces;
-    @JsonProperty("includeMetadata")
+    @JsonProperty("include_metadata")
     private Long includeMetadata;
     private Map<java.lang.String, Object> additionalProperties = new HashMap<java.lang.String, Object>();
 
@@ -50,12 +50,12 @@ public class ListDataParams {
         return this;
     }
 
-    @JsonProperty("includeMetadata")
+    @JsonProperty("include_metadata")
     public Long getIncludeMetadata() {
         return includeMetadata;
     }
 
-    @JsonProperty("includeMetadata")
+    @JsonProperty("include_metadata")
     public void setIncludeMetadata(Long includeMetadata) {
         this.includeMetadata = includeMetadata;
     }

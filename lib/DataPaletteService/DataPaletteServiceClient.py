@@ -36,10 +36,10 @@ class DataPaletteService(object):
     def list_data(self, params, context=None):
         """
         :param params: instance of type "ListDataParams" (workspaces - list
-           of workspace names or IDs (converted to strings), includeMetadata
+           of workspace names or IDs (converted to strings), include_metadata
            - if 1, includes object metadata, if 0, does not. Default 0. TODO:
            pagination?) -> structure: parameter "workspaces" of list of type
-           "ws_name_or_id", parameter "includeMetadata" of type "boolean"
+           "ws_name_or_id", parameter "include_metadata" of type "boolean"
            (@range [0,1])
         :returns: instance of type "DataList" (data_palette_refs - mapping
            from workspace ID to reference to DataPalette container object.)
