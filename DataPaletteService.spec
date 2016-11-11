@@ -8,22 +8,38 @@ module DataPaletteService {
 
     /* @id ws */
     typedef string ws_ref;
+    
+    /* @range [0,1] */
+    typedef int boolean;
 
     typedef structure {
         ws_ref ref;
         Workspace.object_info info;
     } DataInfo;
 
+    /* String with numeric ID of workspace (working as key in mapping). */
+    typedef string ws_text_id;
+
+    /*
+        data_palette_refs - mapping from workspace ID to reference to DataPalette
+            container object.
+    */
     typedef structure {
         list <DataInfo> data;
+        mapping<ws_text_id, ws_ref> data_palette_refs;
     } DataList;
 
 
     typedef string ws_name_or_id;
 
-    /* todo: pagination? */
+    /*
+        workspaces - list of workspace names or IDs (converted to strings),
+        include_metadata - if 1, includes object metadata, if 0, does not. Default 0.
+        TODO: pagination?
+    */
     typedef structure {
         list <ws_name_or_id> workspaces;
+        boolean include_metadata;
     } ListDataParams;
 
     funcdef list_data(ListDataParams params)

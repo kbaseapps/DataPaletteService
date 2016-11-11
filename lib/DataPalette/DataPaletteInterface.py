@@ -23,6 +23,7 @@ class DataPaletteInterface():
         if not isinstance(params['workspaces'], list):
             raise ValueError('"workspaces" field must be a list')
         workspaces = params['workspaces']
+        include_metadata = params.get('include_metadata', 0)
 
         ws = Workspace(self.ws_url, token=token)
         ws_info_list = []
@@ -42,15 +43,19 @@ class DataPaletteInterface():
 
 
         data = []
-        dp_list_filter = {}
+        dp_list_filter = {'include_metadata': include_metadata}
+        data_palette_refs = {}
         for ws_info in ws_info_list:
             dp = DataPalette(None, ws_info=ws_info, ws=ws)
             data = data + dp.list(dp_list_filter)
+            dp_ref = dp._get_root_data_palette_ref()
+            if dp_ref:
+                data_palette_refs[str(ws_info[0])] = dp_ref
 
         data = self._remove_duplicate_data(data)
 
         return {
-            'data': data
+            'data': data, 'data_palette_refs': data_palette_refs
         }
 
     def add_to_palette(self, ctx, params):

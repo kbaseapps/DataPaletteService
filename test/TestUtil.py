@@ -85,7 +85,7 @@ class TestUtil():
 
     def getAnyWsName(self):
         if len(self.workspaces)==0:
-            createWorkspace()
+            self.createWorkspace()
         return self.workspaces[0]
 
 

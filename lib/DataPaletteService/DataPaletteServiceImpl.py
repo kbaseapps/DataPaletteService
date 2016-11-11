@@ -16,16 +16,16 @@ class DataPaletteService:
     
     '''
 
-    ######## WARNING FOR GEVENT USERS #######
+    ######## WARNING FOR GEVENT USERS ####### noqa
     # Since asynchronous IO can lead to methods - even the same method -
     # interrupting each other, you must be *very* careful when using global
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
-    #########################################
+    ######################################### noqa
     VERSION = "0.0.1"
-    GIT_URL = "git@github.com:kbaseapps/DataPaletteService"
-    GIT_COMMIT_HASH = "e1ff94302996798531ae377ce775b98f4533bfe6"
-    
+    GIT_URL = "https://github.com/rsutormin/DataPaletteService"
+    GIT_COMMIT_HASH = "cf43bb68f139d5267420a8752209a5930d6e8f5d"
+
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
 
@@ -37,42 +37,47 @@ class DataPaletteService:
         self.data_palette_interface = DataPaletteInterface(self.wsURL)
         #END_CONSTRUCTOR
         pass
-    
+
 
     def list_data(self, ctx, params):
         """
-        :param params: instance of type "ListDataParams" (todo: pagination?)
-           -> structure: parameter "workspaces" of list of type
-           "ws_name_or_id"
-        :returns: instance of type "DataList" -> structure: parameter "data"
-           of list of type "DataInfo" -> structure: parameter "ref" of type
-           "ws_ref" (@id ws), parameter "info" of type "object_info"
-           (Information about an object, including user provided metadata.
-           obj_id objid - the numerical id of the object. obj_name name - the
-           name of the object. type_string type - the type of the object.
-           timestamp save_date - the save date of the object. obj_ver ver -
-           the version of the object. username saved_by - the user that saved
-           or copied the object. ws_id wsid - the workspace containing the
-           object. ws_name workspace - the workspace containing the object.
-           string chsum - the md5 checksum of the object. int size - the size
-           of the object in bytes. usermeta meta - arbitrary user-supplied
-           metadata about the object.) -> tuple of size 11: parameter "objid"
-           of type "obj_id" (The unique, permanent numerical ID of an
-           object.), parameter "name" of type "obj_name" (A string used as a
-           name for an object. Any string consisting of alphanumeric
-           characters and the characters |._- that is not an integer is
-           acceptable.), parameter "type" of type "type_string" (A type
-           string. Specifies the type and its version in a single string in
-           the format [module].[typename]-[major].[minor]: module - a string.
-           The module name of the typespec containing the type. typename - a
-           string. The name of the type as assigned by the typedef statement.
-           major - an integer. The major version of the type. A change in the
-           major version implies the type has changed in a non-backwards
-           compatible way. minor - an integer. The minor version of the type.
-           A change in the minor version implies that the type has changed in
-           a way that is backwards compatible with previous type definitions.
-           In many cases, the major and minor versions are optional, and if
-           not provided the most recent version will be used. Example:
+        :param params: instance of type "ListDataParams" (workspaces - list
+           of workspace names or IDs (converted to strings), include_metadata
+           - if 1, includes object metadata, if 0, does not. Default 0. TODO:
+           pagination?) -> structure: parameter "workspaces" of list of type
+           "ws_name_or_id", parameter "include_metadata" of type "boolean"
+           (@range [0,1])
+        :returns: instance of type "DataList" (data_palette_refs - mapping
+           from workspace ID to reference to DataPalette container object.)
+           -> structure: parameter "data" of list of type "DataInfo" ->
+           structure: parameter "ref" of type "ws_ref" (@id ws), parameter
+           "info" of type "object_info" (Information about an object,
+           including user provided metadata. obj_id objid - the numerical id
+           of the object. obj_name name - the name of the object. type_string
+           type - the type of the object. timestamp save_date - the save date
+           of the object. obj_ver ver - the version of the object. username
+           saved_by - the user that saved or copied the object. ws_id wsid -
+           the workspace containing the object. ws_name workspace - the
+           workspace containing the object. string chsum - the md5 checksum
+           of the object. int size - the size of the object in bytes.
+           usermeta meta - arbitrary user-supplied metadata about the
+           object.) -> tuple of size 11: parameter "objid" of type "obj_id"
+           (The unique, permanent numerical ID of an object.), parameter
+           "name" of type "obj_name" (A string used as a name for an object.
+           Any string consisting of alphanumeric characters and the
+           characters |._- that is not an integer is acceptable.), parameter
+           "type" of type "type_string" (A type string. Specifies the type
+           and its version in a single string in the format
+           [module].[typename]-[major].[minor]: module - a string. The module
+           name of the typespec containing the type. typename - a string. The
+           name of the type as assigned by the typedef statement. major - an
+           integer. The major version of the type. A change in the major
+           version implies the type has changed in a non-backwards compatible
+           way. minor - an integer. The minor version of the type. A change
+           in the minor version implies that the type has changed in a way
+           that is backwards compatible with previous type definitions. In
+           many cases, the major and minor versions are optional, and if not
+           provided the most recent version will be used. Example:
            MyModule.MyType-3.1), parameter "save_date" of type "timestamp" (A
            time in the format YYYY-MM-DDThh:mm:ssZ, where Z is either the
            character Z (representing the UTC timezone) or the difference in
@@ -89,7 +94,10 @@ class DataPaletteService:
            kbasetest:my_workspace.), parameter "chsum" of String, parameter
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
-           the user.) -> mapping from String to String
+           the user.) -> mapping from String to String, parameter
+           "data_palette_refs" of mapping from type "ws_text_id" (String with
+           numeric ID of workspace (working as key in mapping).) to type
+           "ws_ref" (@id ws)
         """
         # ctx is the context object
         # return variables are: data_list
@@ -195,7 +203,6 @@ class DataPaletteService:
                              'result is not type dict as required.')
         # return the results
         return [result]
-
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK", 'message': "", 'version': self.VERSION, 
