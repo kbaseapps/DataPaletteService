@@ -184,8 +184,10 @@ class DataPalette():
                                                'includeMetadata': include_metadata
                                                })
 
+        dp_ref = self._get_root_data_palette_ref()
         for k in range(0, len(all_info)):
             palette['data'][k]['info'] = all_info[k]
+            palette['data'][k]['dp_ref'] = dp_ref
 
         return palette
 

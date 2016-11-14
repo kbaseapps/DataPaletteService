@@ -12,9 +12,13 @@ module DataPaletteService {
     /* @range [0,1] */
     typedef int boolean;
 
+    /*
+        dp_ref - reference to DataPalette container pointing to this object.
+    */
     typedef structure {
         ws_ref ref;
         Workspace.object_info info;
+        ws_ref dp_ref;
     } DataInfo;
 
     /* String with numeric ID of workspace (working as key in mapping). */

@@ -125,6 +125,7 @@ DataList is a reference to a hash where the following keys are defined:
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
+	dp_ref has a value which is a DataPaletteService.ws_ref
 ws_ref is a string
 object_info is a reference to a list containing 11 items:
 	0: (objid) a Workspace.obj_id
@@ -167,6 +168,7 @@ DataList is a reference to a hash where the following keys are defined:
 DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
+	dp_ref has a value which is a DataPaletteService.ws_ref
 ws_ref is a string
 object_info is a reference to a list containing 11 items:
 	0: (objid) a Workspace.obj_id
@@ -788,6 +790,11 @@ an int
 
 
 
+=item Description
+
+dp_ref - reference to DataPalette container pointing to this object.
+
+
 =item Definition
 
 =begin html
@@ -796,6 +803,7 @@ an int
 a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
 info has a value which is a Workspace.object_info
+dp_ref has a value which is a DataPaletteService.ws_ref
 
 </pre>
 
@@ -806,6 +814,7 @@ info has a value which is a Workspace.object_info
 a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
 info has a value which is a Workspace.object_info
+dp_ref has a value which is a DataPaletteService.ws_ref
 
 
 =end text
