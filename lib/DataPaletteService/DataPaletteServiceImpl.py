@@ -24,7 +24,7 @@ class DataPaletteService:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/rsutormin/DataPaletteService"
-    GIT_COMMIT_HASH = "cf43bb68f139d5267420a8752209a5930d6e8f5d"
+    GIT_COMMIT_HASH = "f3dbbf4b500d7fcad8542eb6c56ed970e6b497fb"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -49,7 +49,8 @@ class DataPaletteService:
            (@range [0,1])
         :returns: instance of type "DataList" (data_palette_refs - mapping
            from workspace ID to reference to DataPalette container object.)
-           -> structure: parameter "data" of list of type "DataInfo" ->
+           -> structure: parameter "data" of list of type "DataInfo" (dp_ref
+           - reference to DataPalette container pointing to this object.) ->
            structure: parameter "ref" of type "ws_ref" (@id ws), parameter
            "info" of type "object_info" (Information about an object,
            including user provided metadata. obj_id objid - the numerical id
@@ -94,10 +95,10 @@ class DataPaletteService:
            kbasetest:my_workspace.), parameter "chsum" of String, parameter
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
-           the user.) -> mapping from String to String, parameter
-           "data_palette_refs" of mapping from type "ws_text_id" (String with
-           numeric ID of workspace (working as key in mapping).) to type
-           "ws_ref" (@id ws)
+           the user.) -> mapping from String to String, parameter "dp_ref" of
+           type "ws_ref" (@id ws), parameter "data_palette_refs" of mapping
+           from type "ws_text_id" (String with numeric ID of workspace
+           (working as key in mapping).) to type "ws_ref" (@id ws)
         """
         # ctx is the context object
         # return variables are: data_list

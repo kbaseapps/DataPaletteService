@@ -95,6 +95,7 @@ class SimpleTest(unittest.TestCase):
         self.assertEqual(len(d['data']),1)
         self.assertEqual(d['data'][0]['ref'], objs[0]['abs_ref'])
         self.assertIsNotNone(d['data'][0]['info'][10])
+        self.assertIsNotNone(d['data'][0]['dp_ref'])
         self.assertIn('data_palette_refs', d)
         self.assertEqual(len(d['data_palette_refs']),1)
         ws_id1 = self.test_util.ws().get_workspace_info({'workspace': ws_name1})[0]

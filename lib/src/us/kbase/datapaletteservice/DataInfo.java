@@ -14,14 +14,17 @@ import us.kbase.common.service.Tuple11;
 
 /**
  * <p>Original spec-file type: DataInfo</p>
- * 
+ * <pre>
+ * dp_ref - reference to DataPalette container pointing to this object.
+ * </pre>
  * 
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("com.googlecode.jsonschema2pojo")
 @JsonPropertyOrder({
     "ref",
-    "info"
+    "info",
+    "dp_ref"
 })
 public class DataInfo {
 
@@ -29,6 +32,8 @@ public class DataInfo {
     private java.lang.String ref;
     @JsonProperty("info")
     private Tuple11 <Long, String, String, String, Long, String, Long, String, String, Long, Map<String, String>> info;
+    @JsonProperty("dp_ref")
+    private java.lang.String dpRef;
     private Map<java.lang.String, Object> additionalProperties = new HashMap<java.lang.String, Object>();
 
     @JsonProperty("ref")
@@ -61,6 +66,21 @@ public class DataInfo {
         return this;
     }
 
+    @JsonProperty("dp_ref")
+    public java.lang.String getDpRef() {
+        return dpRef;
+    }
+
+    @JsonProperty("dp_ref")
+    public void setDpRef(java.lang.String dpRef) {
+        this.dpRef = dpRef;
+    }
+
+    public DataInfo withDpRef(java.lang.String dpRef) {
+        this.dpRef = dpRef;
+        return this;
+    }
+
     @JsonAnyGetter
     public Map<java.lang.String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -73,7 +93,7 @@ public class DataInfo {
 
     @Override
     public java.lang.String toString() {
-        return ((((((("DataInfo"+" [ref=")+ ref)+", info=")+ info)+", additionalProperties=")+ additionalProperties)+"]");
+        return ((((((((("DataInfo"+" [ref=")+ ref)+", info=")+ info)+", dpRef=")+ dpRef)+", additionalProperties=")+ additionalProperties)+"]");
     }
 
 }

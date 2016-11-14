@@ -43,7 +43,8 @@ class DataPaletteService(object):
            (@range [0,1])
         :returns: instance of type "DataList" (data_palette_refs - mapping
            from workspace ID to reference to DataPalette container object.)
-           -> structure: parameter "data" of list of type "DataInfo" ->
+           -> structure: parameter "data" of list of type "DataInfo" (dp_ref
+           - reference to DataPalette container pointing to this object.) ->
            structure: parameter "ref" of type "ws_ref" (@id ws), parameter
            "info" of type "object_info" (Information about an object,
            including user provided metadata. obj_id objid - the numerical id
@@ -88,10 +89,10 @@ class DataPaletteService(object):
            kbasetest:my_workspace.), parameter "chsum" of String, parameter
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
-           the user.) -> mapping from String to String, parameter
-           "data_palette_refs" of mapping from type "ws_text_id" (String with
-           numeric ID of workspace (working as key in mapping).) to type
-           "ws_ref" (@id ws)
+           the user.) -> mapping from String to String, parameter "dp_ref" of
+           type "ws_ref" (@id ws), parameter "data_palette_refs" of mapping
+           from type "ws_text_id" (String with numeric ID of workspace
+           (working as key in mapping).) to type "ws_ref" (@id ws)
         """
         return self._client.call_method(
             'DataPaletteService.list_data',
