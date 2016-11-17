@@ -178,9 +178,10 @@ class DataPalette():
         # TODO: make sure we get object info via reference chain
         if len(palette['data']) == 0:
             return palette
-
+        palette_ref = self._get_root_data_palette_ref()
+        info_input = [{'ref': palette_ref + ';' + obj['ref']} for obj in palette['data']]
         all_info = self.ws.get_object_info_new({
-                                               'objects': palette['data'],
+                                               'objects': info_input,
                                                'includeMetadata': include_metadata
                                                })
 

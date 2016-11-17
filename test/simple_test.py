@@ -2,6 +2,7 @@
 import unittest
 import os
 import time
+import json
 
 from pprint import pprint
 
@@ -207,6 +208,17 @@ class SimpleTest(unittest.TestCase):
         dps.set_palette_for_ws(self.ctx(),{'workspace':ws_name3})
         d = dps.list_data(self.ctx(),{'workspaces':[ws_name3]})[0]
         self.assertEqual(len(d['data']),3)
+        
+        # Let's delete ws_name2 and check that we can list objects from there fixed in DP ws_name1
+        ws_id2 = self.test_util.ws().get_workspace_info({'workspace': ws_name2})[0]
+        self.test_util.workspaces.remove(ws_name2)
+        self.test_util.ws().delete_workspace({'workspace': ws_name2})
+        d = dps.list_data(self.ctx(),{'workspaces':[ws_name1], 'include_metadata': 1})[0]
+        self.assertIn('data', d)
+        self.assertTrue(len(d['data']) > 0)
+        for item in d['data']:
+            self.assertEqual(item['info'][6], ws_id2)
+
 
 
     def test_bulk_list_sets(self):
