@@ -189,6 +189,7 @@ class DataPalette():
         for k in range(0, len(all_info)):
             palette['data'][k]['info'] = all_info[k]
             palette['data'][k]['dp_ref'] = dp_ref
+            palette['data'][k]['dp_refs'] = [dp_ref]
 
         return palette
 

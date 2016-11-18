@@ -220,6 +220,34 @@ class SimpleTest(unittest.TestCase):
             self.assertEqual(item['info'][6], ws_id2)
 
 
+    def test_unique_list_items(self):
+        dps = self.getImpl()
+
+        # Creating original workspace
+        ws_name1 = self.test_util.createWorkspace()
+        obj = self.load_object_data(ws_name1)[0]
+        obj_ref = obj['abs_ref']
+        #obj_info = obj['info']
+
+        # Creating two workspaces with DPs
+        ws_name2 = self.test_util.createWorkspace()
+        dps.add_to_palette(self.ctx(),{'workspace':ws_name2,
+                                       'new_refs':[{'ref': obj_ref}]})
+        ws_name3 = self.test_util.createWorkspace()
+        dps.add_to_palette(self.ctx(),{'workspace':ws_name3,
+                                       'new_refs':[{'ref': obj_ref}]})
+
+        d = dps.list_data(self.ctx(),{'workspaces':[ws_name2, ws_name3]})[0]
+        self.assertIn('data', d)
+        self.assertEqual(len(d['data']), 1)
+        self.assertIn('data_palette_refs', d)
+        self.assertEqual(len(d['data_palette_refs']), 2)
+        dp_cnt_refs = [d['data_palette_refs'][key] for key in d['data_palette_refs']]
+        self.assertTrue('dp_refs' in d['data'][0])
+        self.assertEqual(len(d['data'][0]['dp_refs']), 2)
+        for dp_cnt_ref in dp_cnt_refs:
+            self.assertTrue(dp_cnt_ref in d['data'][0]['dp_refs'])
+        
 
     def test_bulk_list_sets(self):
         ids = []

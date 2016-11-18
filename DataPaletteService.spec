@@ -13,12 +13,16 @@ module DataPaletteService {
     typedef int boolean;
 
     /*
-        dp_ref - reference to DataPalette container pointing to this object.
+        dp_ref - reference to DataPalette container pointing to given object,
+        dp_refs - full list of references to DataPalette containers that
+            point to given object (in contrast to dp_ref which shows only
+            first item from dp_refs list).
     */
     typedef structure {
         ws_ref ref;
         Workspace.object_info info;
         ws_ref dp_ref;
+        list<ws_ref> dp_refs;
     } DataInfo;
 
     /* String with numeric ID of workspace (working as key in mapping). */

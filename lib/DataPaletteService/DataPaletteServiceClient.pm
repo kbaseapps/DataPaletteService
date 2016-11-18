@@ -126,6 +126,7 @@ DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
 	dp_ref has a value which is a DataPaletteService.ws_ref
+	dp_refs has a value which is a reference to a list where each element is a DataPaletteService.ws_ref
 ws_ref is a string
 object_info is a reference to a list containing 11 items:
 	0: (objid) a Workspace.obj_id
@@ -169,6 +170,7 @@ DataInfo is a reference to a hash where the following keys are defined:
 	ref has a value which is a DataPaletteService.ws_ref
 	info has a value which is a Workspace.object_info
 	dp_ref has a value which is a DataPaletteService.ws_ref
+	dp_refs has a value which is a reference to a list where each element is a DataPaletteService.ws_ref
 ws_ref is a string
 object_info is a reference to a list containing 11 items:
 	0: (objid) a Workspace.obj_id
@@ -792,7 +794,10 @@ an int
 
 =item Description
 
-dp_ref - reference to DataPalette container pointing to this object.
+dp_ref - reference to DataPalette container pointing to given object,
+dp_refs - full list of references to DataPalette containers that
+    point to given object (in contrast to dp_ref which shows only
+    first item from dp_refs list).
 
 
 =item Definition
@@ -804,6 +809,7 @@ a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
 info has a value which is a Workspace.object_info
 dp_ref has a value which is a DataPaletteService.ws_ref
+dp_refs has a value which is a reference to a list where each element is a DataPaletteService.ws_ref
 
 </pre>
 
@@ -815,6 +821,7 @@ a reference to a hash where the following keys are defined:
 ref has a value which is a DataPaletteService.ws_ref
 info has a value which is a Workspace.object_info
 dp_ref has a value which is a DataPaletteService.ws_ref
+dp_refs has a value which is a reference to a list where each element is a DataPaletteService.ws_ref
 
 
 =end text
