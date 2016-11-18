@@ -133,8 +133,10 @@ class DataPaletteInterface():
         unique_data = []
         for d in data:
             if d['ref'] in unique_refs:
+                orig = unique_refs[d['ref']]
+                orig['dp_refs'].append(d['dp_ref'])
                 continue
-            unique_refs[d['ref']] = None
+            unique_refs[d['ref']] = d
             unique_data.append(d)
         return unique_data
 

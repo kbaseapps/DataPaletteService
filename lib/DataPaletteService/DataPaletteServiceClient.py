@@ -44,35 +44,37 @@ class DataPaletteService(object):
         :returns: instance of type "DataList" (data_palette_refs - mapping
            from workspace ID to reference to DataPalette container object.)
            -> structure: parameter "data" of list of type "DataInfo" (dp_ref
-           - reference to DataPalette container pointing to this object.) ->
-           structure: parameter "ref" of type "ws_ref" (@id ws), parameter
-           "info" of type "object_info" (Information about an object,
-           including user provided metadata. obj_id objid - the numerical id
-           of the object. obj_name name - the name of the object. type_string
-           type - the type of the object. timestamp save_date - the save date
-           of the object. obj_ver ver - the version of the object. username
-           saved_by - the user that saved or copied the object. ws_id wsid -
-           the workspace containing the object. ws_name workspace - the
-           workspace containing the object. string chsum - the md5 checksum
-           of the object. int size - the size of the object in bytes.
-           usermeta meta - arbitrary user-supplied metadata about the
-           object.) -> tuple of size 11: parameter "objid" of type "obj_id"
-           (The unique, permanent numerical ID of an object.), parameter
-           "name" of type "obj_name" (A string used as a name for an object.
-           Any string consisting of alphanumeric characters and the
-           characters |._- that is not an integer is acceptable.), parameter
-           "type" of type "type_string" (A type string. Specifies the type
-           and its version in a single string in the format
-           [module].[typename]-[major].[minor]: module - a string. The module
-           name of the typespec containing the type. typename - a string. The
-           name of the type as assigned by the typedef statement. major - an
-           integer. The major version of the type. A change in the major
-           version implies the type has changed in a non-backwards compatible
-           way. minor - an integer. The minor version of the type. A change
-           in the minor version implies that the type has changed in a way
-           that is backwards compatible with previous type definitions. In
-           many cases, the major and minor versions are optional, and if not
-           provided the most recent version will be used. Example:
+           - reference to DataPalette container pointing to given object,
+           dp_refs - full list of references to DataPalette containers that
+           point to given object (in contrast to dp_ref which shows only
+           first item from dp_refs list).) -> structure: parameter "ref" of
+           type "ws_ref" (@id ws), parameter "info" of type "object_info"
+           (Information about an object, including user provided metadata.
+           obj_id objid - the numerical id of the object. obj_name name - the
+           name of the object. type_string type - the type of the object.
+           timestamp save_date - the save date of the object. obj_ver ver -
+           the version of the object. username saved_by - the user that saved
+           or copied the object. ws_id wsid - the workspace containing the
+           object. ws_name workspace - the workspace containing the object.
+           string chsum - the md5 checksum of the object. int size - the size
+           of the object in bytes. usermeta meta - arbitrary user-supplied
+           metadata about the object.) -> tuple of size 11: parameter "objid"
+           of type "obj_id" (The unique, permanent numerical ID of an
+           object.), parameter "name" of type "obj_name" (A string used as a
+           name for an object. Any string consisting of alphanumeric
+           characters and the characters |._- that is not an integer is
+           acceptable.), parameter "type" of type "type_string" (A type
+           string. Specifies the type and its version in a single string in
+           the format [module].[typename]-[major].[minor]: module - a string.
+           The module name of the typespec containing the type. typename - a
+           string. The name of the type as assigned by the typedef statement.
+           major - an integer. The major version of the type. A change in the
+           major version implies the type has changed in a non-backwards
+           compatible way. minor - an integer. The minor version of the type.
+           A change in the minor version implies that the type has changed in
+           a way that is backwards compatible with previous type definitions.
+           In many cases, the major and minor versions are optional, and if
+           not provided the most recent version will be used. Example:
            MyModule.MyType-3.1), parameter "save_date" of type "timestamp" (A
            time in the format YYYY-MM-DDThh:mm:ssZ, where Z is either the
            character Z (representing the UTC timezone) or the difference in
@@ -90,9 +92,10 @@ class DataPaletteService(object):
            "size" of Long, parameter "meta" of type "usermeta" (User provided
            metadata about an object. Arbitrary key-value pairs provided by
            the user.) -> mapping from String to String, parameter "dp_ref" of
-           type "ws_ref" (@id ws), parameter "data_palette_refs" of mapping
-           from type "ws_text_id" (String with numeric ID of workspace
-           (working as key in mapping).) to type "ws_ref" (@id ws)
+           type "ws_ref" (@id ws), parameter "dp_refs" of list of type
+           "ws_ref" (@id ws), parameter "data_palette_refs" of mapping from
+           type "ws_text_id" (String with numeric ID of workspace (working as
+           key in mapping).) to type "ws_ref" (@id ws)
         """
         return self._client.call_method(
             'DataPaletteService.list_data',
