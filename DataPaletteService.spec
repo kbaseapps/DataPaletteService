@@ -54,7 +54,9 @@ module DataPaletteService {
         returns (DataList data_list) authentication optional;
 
 
-    /* todo: allow passing in a reference chain */
+    /* 
+        ref - is workspace reference or ref-path string
+    */
     typedef structure {
         ws_ref ref;
     } ObjectReference;

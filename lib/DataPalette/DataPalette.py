@@ -77,13 +77,18 @@ class DataPalette():
         # get the existing palette and build an index
         palette = self._get_data_palette()
         data_index = self._build_palette_data_index(palette['data'])
+        
+        # changing refs in DataPalette so that they are pointed through
+        # DataPalette object ref as ref-path
+        self._extend_ref_paths_before_saving(palette)
 
         # perform the actual update palette update
-        for o in objs:
+        for obj_pos in range(0, len(objs)):
+            o = objs[obj_pos]
             ws = str(o[6])
             obj = str(o[0])
             ver = str(o[4])
-            ref = ws + '/' + obj + '/' + ver
+            ref = refs[obj_pos]['ref']     #ws + '/' + obj + '/' + ver
 
             if ws + '/' + obj in data_index:
                 # the object is in the palette, so check versions
@@ -145,6 +150,7 @@ class DataPalette():
         for i in sorted(index_to_delete, reverse=True):
             del palette['data'][i]
 
+        self._extend_ref_paths_before_saving(palette)
         self._save_data_palette(palette)
 
         return {}
@@ -192,6 +198,12 @@ class DataPalette():
             palette['data'][k]['dp_refs'] = [dp_ref]
 
         return palette
+
+
+    def _extend_ref_paths_before_saving(self, palette):
+        dp_ref = self._get_root_data_palette_ref()
+        for data_ref in palette['data']:
+            data_ref['ref'] = dp_ref + ';' + data_ref['ref']
 
 
     def _save_data_palette(self, palette):
