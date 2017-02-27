@@ -13,12 +13,13 @@ except:
 
 from biokbase.workspace.client import Workspace
 from DataPaletteService.DataPaletteServiceServer import MethodContext
+from DataPaletteService.authclient import KBaseAuth as _KBaseAuth
 
 class TestUtil():
 
     def __init__(self, verbose=True):
-        self._setup_ctx()
         self._load_kb_config()
+        self._setup_ctx()
         self._ws = None
         self.workspaces = []
         self.verbose = verbose
@@ -26,9 +27,9 @@ class TestUtil():
 
     def _setup_ctx(self):
         self.token = environ.get('KB_AUTH_TOKEN', None)
-        user_id = requests.post(
-            'https://kbase.us/services/authorization/Sessions/Login',
-            data='token={}&fields=user_id'.format(self.token)).json()['user_id']
+        authServiceUrl = self._cfg['auth-service-url']
+        auth_client = _KBaseAuth(authServiceUrl)
+        user_id = auth_client.get_user(self.token)
         self._ctx = MethodContext(None)
         self._ctx.update({'token': self.token,
                         'user_id': user_id,

@@ -24,7 +24,7 @@ class DataPaletteService:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/rsutormin/DataPaletteService"
-    GIT_COMMIT_HASH = "3585c07a71a09b8863acd7cc12af0778f11f03e1"
+    GIT_COMMIT_HASH = "2c4927f94d6801f932e97a4a9556f1b138463fdd"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -120,9 +120,9 @@ class DataPaletteService:
         """
         :param params: instance of type "AddToPaletteParams" -> structure:
            parameter "workspace" of type "ws_name_or_id", parameter
-           "new_refs" of list of type "ObjectReference" (todo: allow passing
-           in a reference chain) -> structure: parameter "ref" of type
-           "ws_ref" (@id ws)
+           "new_refs" of list of type "ObjectReference" (ref - is workspace
+           reference or ref-path string) -> structure: parameter "ref" of
+           type "ws_ref" (@id ws)
         :returns: instance of type "AddToPaletteResult" -> structure:
         """
         # ctx is the context object

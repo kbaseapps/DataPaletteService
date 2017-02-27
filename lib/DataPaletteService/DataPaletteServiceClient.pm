@@ -972,7 +972,7 @@ include_metadata has a value which is a DataPaletteService.boolean
 
 =item Description
 
-todo: allow passing in a reference chain
+ref - is workspace reference or ref-path string
 
 
 =item Definition

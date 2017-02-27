@@ -105,9 +105,9 @@ class DataPaletteService(object):
         """
         :param params: instance of type "AddToPaletteParams" -> structure:
            parameter "workspace" of type "ws_name_or_id", parameter
-           "new_refs" of list of type "ObjectReference" (todo: allow passing
-           in a reference chain) -> structure: parameter "ref" of type
-           "ws_ref" (@id ws)
+           "new_refs" of list of type "ObjectReference" (ref - is workspace
+           reference or ref-path string) -> structure: parameter "ref" of
+           type "ws_ref" (@id ws)
         :returns: instance of type "AddToPaletteResult" -> structure:
         """
         return self._client.call_method(
