@@ -20,7 +20,7 @@ from DataPaletteService.authclient import KBaseAuth as _KBaseAuth
 
 DEPLOY = 'KB_DEPLOYMENT_CONFIG'
 SERVICE = 'KB_SERVICE_NAME'
-AUTH = 'auth-server-url'
+AUTH = 'auth-service-url'
 
 # Note that the error fields do not match the 2.0 JSONRPC spec
 
@@ -109,7 +109,11 @@ class JSONRPCServiceCustom(JSONRPCService):
             # Exception was raised inside the method.
             newerr = JSONServerError()
             newerr.trace = traceback.format_exc()
-            newerr.data = e.message
+            if isinstance(e.message, basestring):
+                newerr.data = e.message
+            else:
+                # Some exceptions embed other exceptions as the message
+                newerr.data = repr(e.message)
             raise newerr
         return result
 
@@ -332,23 +336,23 @@ class Application(object):
         self.rpc_service.add(impl_DataPaletteService.list_data,
                              name='DataPaletteService.list_data',
                              types=[dict])
-        self.method_authentication['DataPaletteService.list_data'] = 'optional' # noqa
+        self.method_authentication['DataPaletteService.list_data'] = 'optional'  # noqa
         self.rpc_service.add(impl_DataPaletteService.add_to_palette,
                              name='DataPaletteService.add_to_palette',
                              types=[dict])
-        self.method_authentication['DataPaletteService.add_to_palette'] = 'required' # noqa
+        self.method_authentication['DataPaletteService.add_to_palette'] = 'required'  # noqa
         self.rpc_service.add(impl_DataPaletteService.remove_from_palette,
                              name='DataPaletteService.remove_from_palette',
                              types=[dict])
-        self.method_authentication['DataPaletteService.remove_from_palette'] = 'required' # noqa
+        self.method_authentication['DataPaletteService.remove_from_palette'] = 'required'  # noqa
         self.rpc_service.add(impl_DataPaletteService.copy_palette,
                              name='DataPaletteService.copy_palette',
                              types=[dict])
-        self.method_authentication['DataPaletteService.copy_palette'] = 'required' # noqa
+        self.method_authentication['DataPaletteService.copy_palette'] = 'required'  # noqa
         self.rpc_service.add(impl_DataPaletteService.set_palette_for_ws,
                              name='DataPaletteService.set_palette_for_ws',
                              types=[dict])
-        self.method_authentication['DataPaletteService.set_palette_for_ws'] = 'required' # noqa
+        self.method_authentication['DataPaletteService.set_palette_for_ws'] = 'required'  # noqa
         self.rpc_service.add(impl_DataPaletteService.status,
                              name='DataPaletteService.status',
                              types=[dict])

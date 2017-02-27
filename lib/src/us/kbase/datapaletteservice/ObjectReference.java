@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * <p>Original spec-file type: ObjectReference</p>
  * <pre>
- * todo: allow passing in a reference chain
+ * ref - is workspace reference or ref-path string
  * </pre>
  * 
  */
