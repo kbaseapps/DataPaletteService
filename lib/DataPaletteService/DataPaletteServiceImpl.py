@@ -22,9 +22,9 @@ class DataPaletteService:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.1"
+    VERSION = "0.0.2"
     GIT_URL = "https://github.com/rsutormin/DataPaletteService"
-    GIT_COMMIT_HASH = "2c4927f94d6801f932e97a4a9556f1b138463fdd"
+    GIT_COMMIT_HASH = "6ddaa93f90896fea15df4003375cd289e884d085"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
